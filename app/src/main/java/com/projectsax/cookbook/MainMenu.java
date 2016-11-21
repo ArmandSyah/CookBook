@@ -15,6 +15,7 @@ public class MainMenu extends AppCompatActivity {
 
         Button viewBtn = (Button) findViewById(R.id.viewRecipeBtn);
         Button searchBtn = (Button) findViewById(R.id.searchRecipeBtn);
+        Button newBtn = (Button) findViewById(R.id.newRecipeBtn);
 
         viewBtn.setOnClickListener(new View.OnClickListener(){
 
@@ -29,6 +30,14 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainMenu.this, SearchRecipe.class));
+            }
+        });
+
+        newBtn.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainMenu.this, CreateNewRecipe.class));
             }
         });
     }
