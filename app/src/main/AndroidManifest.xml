@@ -16,7 +16,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ViewRecipeList" />
-        <activity android:name=".ViewRecipeAdapter"></activity>
+        <activity android:name=".ViewRecipeAdapter" />
+        <activity android:name=".SearchRecipe" />
+        <activity android:name=".CreateNewRecipe"></activity>
     </application>
 
 </manifest>
