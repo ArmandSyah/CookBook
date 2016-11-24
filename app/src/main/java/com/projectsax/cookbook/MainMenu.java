@@ -6,12 +6,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import cookbook.Cookbook;
+
 public class MainMenu extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
+        Cookbook cookbook = Cookbook.getInstance();
 
         Button viewBtn = (Button) findViewById(R.id.viewRecipeBtn);
         Button searchBtn = (Button) findViewById(R.id.searchRecipeBtn);
