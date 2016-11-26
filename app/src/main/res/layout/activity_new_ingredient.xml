@@ -20,7 +20,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="75px"
+            android:layout_height="80px"
             android:weightSum="1">
 
             <TextView
@@ -39,14 +39,14 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText3"
+                android:id="@+id/quantity"
                 android:layout_weight="0.82" />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="75px"
+            android:layout_height="80px"
             android:layout_weight="0.04">
 
             <TextView
@@ -59,8 +59,11 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText5"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/ingredientName"
                 android:layout_weight="1" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -71,7 +74,7 @@
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/listView2"
+                android:id="@+id/currentListOfIngredients"
                 android:layout_gravity="center_horizontal" />
         </LinearLayout>
 
@@ -86,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Add Ingredient"
-                android:id="@+id/button3" />
+                android:id="@+id/add_ingredient_btn" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -96,13 +99,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Reset"
-                android:id="@+id/button8" />
+                android:id="@+id/reset_ingredient_btn" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Finish"
-                android:id="@+id/button9" />
+                android:id="@+id/finish_ingredient_btn" />
         </LinearLayout>
 
     </LinearLayout>

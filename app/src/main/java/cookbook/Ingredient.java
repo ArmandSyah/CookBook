@@ -1,8 +1,12 @@
 package cookbook;
 
+import android.os.Parcelable;
+
 import org.litepal.crud.DataSupport;
 
-class Ingredient extends DataSupport {
+import java.io.Serializable;
+
+public class Ingredient extends DataSupport implements Serializable {
 
     private String amount;
     private String name;
@@ -27,4 +31,5 @@ class Ingredient extends DataSupport {
     public void setName(String name) {
         this.name = name;
     }
+
 }

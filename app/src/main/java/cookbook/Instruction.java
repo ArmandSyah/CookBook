@@ -2,7 +2,9 @@ package cookbook;
 
 import org.litepal.crud.DataSupport;
 
-class Instruction extends DataSupport {
+import java.io.Serializable;
+
+public class Instruction extends DataSupport implements Serializable {
 
     private int stepNum;
     private String step;
