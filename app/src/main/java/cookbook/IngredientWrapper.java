@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class IngredientWrapper implements Serializable {
-    public ArrayList<Ingredient> ingredients;
+    private ArrayList<Ingredient> ingredients;
 
     public IngredientWrapper(ArrayList<Ingredient> ingredients){
         this.ingredients = ingredients;

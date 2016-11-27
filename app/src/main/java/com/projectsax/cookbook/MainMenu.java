@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import org.litepal.LitePal;
-
 import java.util.ArrayList;
 
 import cookbook.Cookbook;
@@ -31,9 +29,9 @@ public class MainMenu extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                ArrayList<Recipe> listOfRecipes = cookbook.getListOfRecipes();
+                ArrayList<Recipe> recipeList = cookbook.getListOfRecipes();
                 Intent viewRecipeListIntent = new Intent(MainMenu.this, ViewRecipeList.class);
-                viewRecipeListIntent.putExtra("recipeList", new RecipeWrapper(listOfRecipes));
+                viewRecipeListIntent.putExtra("recipeList", new RecipeWrapper(recipeList));
                 startActivity(viewRecipeListIntent);
             }
         });

@@ -16,11 +16,11 @@ import java.util.ArrayList;
 
 import cookbook.Recipe;
 
-public class ViewRecipeAdapter extends ArrayAdapter<Recipe> {
+public class ViewRecipeListAdapter extends ArrayAdapter<Recipe> {
     private final Context context;
     private final ArrayList<Recipe> listOfRecipes;
 
-    public ViewRecipeAdapter(Context context, ArrayList<Recipe> listOfRecipes) {
+    public ViewRecipeListAdapter(Context context, ArrayList<Recipe> listOfRecipes) {
         super(context, R.layout.activity_view_recipe_list, listOfRecipes);
         this.context = context;
         this.listOfRecipes = listOfRecipes;

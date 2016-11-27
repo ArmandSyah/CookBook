@@ -19,7 +19,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="106dp">
+            android:layout_height="106dp"
+            android:layout_weight="0.47">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -81,7 +82,9 @@
                 android:layout_height="20px"
                 android:layout_alignTop="@+id/textView14"
                 android:layout_toRightOf="@+id/textView14"
-                android:layout_alignBottom="@+id/prepTime" />
+                android:layout_alignBottom="@+id/prepTime"
+                android:layout_alignRight="@+id/prepTime"
+                android:layout_alignEnd="@+id/prepTime" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -96,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Cook Time"
+                android:text="Cook Time:"
                 android:id="@+id/textView15"
                 android:layout_alignTop="@+id/prepTime"
                 android:layout_toRightOf="@+id/prepTime"
@@ -109,9 +112,7 @@
                 android:layout_height="20px"
                 android:layout_alignTop="@+id/cookTime"
                 android:layout_toRightOf="@+id/cookTime"
-                android:layout_alignParentBottom="true"
-                android:layout_alignRight="@+id/cookTime"
-                android:layout_alignEnd="@+id/cookTime" />
+                android:layout_alignParentBottom="true" />
 
             <TextView
                 android:layout_width="wrap_content"
