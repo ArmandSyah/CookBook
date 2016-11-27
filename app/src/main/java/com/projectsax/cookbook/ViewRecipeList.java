@@ -4,6 +4,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
 
+import com.projectsax.cookbook.adapterpackage.ViewRecipeAdapter;
+
+import java.util.ArrayList;
+
+import cookbook.Recipe;
+import cookbook.RecipeWrapper;
+
 public class ViewRecipeList extends AppCompatActivity {
 
     @Override
@@ -11,13 +18,12 @@ public class ViewRecipeList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_recipe_list);
 
-        ListView recipeList = (ListView) findViewById(R.id.list_of_recipes);
-        String[] recipes = new String[]{
-                "Cream Brocolli", "Caesar Salad", "Pumpkin Spice Latte", "empty", "empty", "empty", "empty",
-                "empty", "empty", "empty", "empty", "empty"
-        };
+        ListView recipeList = (ListView) findViewById(R.id.listOfRecipes);
 
-        ViewRecipeAdapter adapter = new ViewRecipeAdapter(this, recipes);
+        RecipeWrapper recipeWrapper = (RecipeWrapper) getIntent().getSerializableExtra("recipeList");
+        ArrayList<Recipe> currentListOfRecipes = recipeWrapper.getRecipeList();
+
+        ViewRecipeAdapter adapter = new ViewRecipeAdapter(this, currentListOfRecipes);
         recipeList.setAdapter(adapter);
     }
 }

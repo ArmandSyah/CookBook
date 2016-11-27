@@ -21,7 +21,7 @@
         <activity android:name=".CreateNewRecipe" />
         <activity android:name=".NewIngredient" />
         <activity android:name=".NewInstruction" />
-        <activity android:name=".viewSelectedRecipe" />
+        <activity android:name=".ViewSelectedRecipe" />
     </application>
 
 </manifest>

@@ -65,7 +65,8 @@
                 android:inputType="number"
                 android:ems="10"
                 android:id="@+id/cookTime"
-                android:layout_weight="0.57" />
+                android:layout_weight="0.57"
+                android:hint="in min" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -84,7 +85,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
-                android:id="@+id/prepTime" />
+                android:id="@+id/prepTime"
+                android:hint="in min" />
 
         </LinearLayout>
 
@@ -178,7 +180,7 @@
                 android:layout_width="74dp"
                 android:layout_height="wrap_content"
                 android:text="Select"
-                android:id="@+id/button7" />
+                android:id="@+id/select_type" />
 
         </LinearLayout>
 
@@ -218,7 +220,7 @@
                 android:layout_width="77dp"
                 android:layout_height="wrap_content"
                 android:text="Select"
-                android:id="@+id/button4"
+                android:id="@+id/select_category"
                 android:layout_weight="0.02" />
         </LinearLayout>
 
@@ -226,7 +228,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Finish"
-            android:id="@+id/button5"
+            android:id="@+id/finish_recipe_btn"
             android:layout_weight="0.04" />
 
         <Button

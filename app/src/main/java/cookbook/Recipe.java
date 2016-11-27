@@ -2,9 +2,10 @@ package cookbook;
 
 import org.litepal.crud.DataSupport;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Recipe extends DataSupport {
+public class Recipe extends DataSupport implements Serializable {
 
     private int cookTime;
     private int prepTime;

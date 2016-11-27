@@ -17,10 +17,15 @@ public class Cookbook extends DataSupport {
 
     private Cookbook() {
         SQLiteDatabase cookbookDatabase = LitePal.getDatabase();
+        listOfRecipes = (ArrayList<Recipe>) DataSupport.findAll(Recipe.class);
     }
 
-    protected static void addRecipe(Recipe newRecipe){
+    public void addRecipe(Recipe newRecipe){
         listOfRecipes.add(newRecipe);
         newRecipe.save();
+    }
+
+    public ArrayList<Recipe> getListOfRecipes(){
+        return listOfRecipes;
     }
 }

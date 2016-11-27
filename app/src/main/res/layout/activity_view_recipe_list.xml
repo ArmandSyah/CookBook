@@ -9,11 +9,36 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.projectsax.cookbook.ViewRecipeList">
 
-    <ListView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/list_of_recipes"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Current List Of Recipes"
+        android:id="@+id/textView18"
+        android:layout_centerHorizontal="true" />
+
+    <Space
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/textView18"
+        android:layout_alignRight="@+id/linearLayout5"
+        android:layout_alignEnd="@+id/linearLayout5"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/space" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/linearLayout5"
+        android:layout_below="@+id/space">
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/listOfRecipes"
+            android:choiceMode="singleChoice" />
+    </LinearLayout>
+
 </RelativeLayout>

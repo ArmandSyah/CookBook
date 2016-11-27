@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.projectsax.cookbook.adapterpackage.IngredientArrayListAdapter;
+
 import cookbook.*;
 
 import java.util.ArrayList;
@@ -34,8 +36,8 @@ public class NewIngredient extends AppCompatActivity {
         ingredientName = (EditText) findViewById(R.id.ingredientName);
         currentListOfIngredients = (ListView) findViewById(R.id.currentListOfIngredients);
 
-        IngredientWrapper iw = (IngredientWrapper) getIntent().getSerializableExtra("ingredientList");
-        ingredients = iw.getIngredients();
+        IngredientWrapper ingredientWrapper = (IngredientWrapper) getIntent().getSerializableExtra("ingredientList");
+        ingredients = ingredientWrapper.getIngredients();
 
         ingredientArrayListAdapter = new IngredientArrayListAdapter(this, ingredients);
         currentListOfIngredients.setAdapter(ingredientArrayListAdapter);
@@ -51,6 +53,8 @@ public class NewIngredient extends AppCompatActivity {
                 else{
                     Ingredient newIngredient = new Ingredient(quantityOfIngredient, nameOfIngredient);
                     ingredients.add(newIngredient);
+                    quantity.setText("");
+                    ingredientName.setText("");
                     Toast.makeText(getApplicationContext(), "Added new ingredient", Toast.LENGTH_SHORT).show();
                     currentListOfIngredients.setAdapter(ingredientArrayListAdapter);
                 }
@@ -71,6 +75,10 @@ public class NewIngredient extends AppCompatActivity {
         finishIngredientBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ingredients.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "add some instructions first or just press the back button", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("ingredientList", new IngredientWrapper(ingredients));
                 setResult(RESULT_OK, returnIntent);

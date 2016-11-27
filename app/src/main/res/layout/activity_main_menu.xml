@@ -52,7 +52,7 @@
                 android:layout_width="274dp"
                 android:layout_height="wrap_content"
                 android:text="New Recipe"
-                android:id="@+id/newRecipeBtn"
+                android:id="@+id/new_recipe_btn"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="0.21" />
 
@@ -60,7 +60,7 @@
                 android:layout_width="274dp"
                 android:layout_height="wrap_content"
                 android:text="Search Recipe"
-                android:id="@+id/searchRecipeBtn"
+                android:id="@+id/search_recipe_btn"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="0.16" />
 
@@ -68,7 +68,7 @@
                 android:layout_width="274dp"
                 android:layout_height="wrap_content"
                 android:text="View Recipe List"
-                android:id="@+id/viewRecipeBtn"
+                android:id="@+id/view_recipe_btn"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="0.16" />
         </LinearLayout>

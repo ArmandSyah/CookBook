@@ -7,37 +7,35 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".adapterpackage.IngredientArrayListAdapter">
+    tools:context=".adapterpackage.InstructionArrayListAdapter">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="100dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/linearLayout3"
-        android:weightSum="1">
+        android:id="@+id/linearLayout4"
+        android:weightSum="1" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/amount" />
+            android:id="@+id/stepNum" />
 
         <Space
             android:layout_width="wrap_content"
             android:layout_height="24dp"
-            android:layout_weight="0.06" />
+            android:layout_weight="0.30" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/ingredient"
+            android:id="@+id/step"
             android:layout_below="@+id/linearLayout3"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
-
     </LinearLayout>
-
 </RelativeLayout>
