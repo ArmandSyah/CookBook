@@ -18,7 +18,7 @@
         </activity>
         <activity android:name=".ViewRecipeList" />
         <activity android:name=".SearchRecipe" />
-        <activity android:name=".CreateNewRecipe" />
+        <activity android:name=".RecipeMaker" />
         <activity android:name=".NewIngredient" />
         <activity android:name=".NewInstruction" />
         <activity android:name=".ViewSelectedRecipe" />

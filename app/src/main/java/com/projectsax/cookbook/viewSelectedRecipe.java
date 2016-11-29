@@ -1,5 +1,6 @@
 package com.projectsax.cookbook;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,8 @@ import cookbook.Recipe;
 import cookbook.RecipeWrapper;
 
 public class ViewSelectedRecipe extends AppCompatActivity {
+
+    private Cookbook cookbook = Cookbook.getInstance();
 
     private RecipeWrapper recipeWrapper;
     private Recipe viewRecipe;
@@ -40,6 +43,7 @@ public class ViewSelectedRecipe extends AppCompatActivity {
         setContentView(R.layout.activity_view_selected_recipe);
 
         Button deleteRecipeBtn = (Button) findViewById(R.id.delete_recipe_btn);
+        Button editRecipeBtn = (Button) findViewById(R.id.edit_recipe_btn);
 
         recipeWrapper = (RecipeWrapper) getIntent().getSerializableExtra("recipe");
         viewRecipe = recipeWrapper.getRecipe();
@@ -53,11 +57,48 @@ public class ViewSelectedRecipe extends AppCompatActivity {
         listOfIngredients = (ListView) findViewById(R.id.listOfIngredients);
         listOfInstructions = (ListView) findViewById(R.id.listOfInstructions);
 
-        ArrayList<Ingredient> ingre = viewRecipe.getListOfIngredients();
-        /*for(Ingredient i: ingre){
-            System.out.println(i);
-        }*/
+       setUp();
 
+        deleteRecipeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                cookbook.deleteRecipe(viewRecipe);
+                Toast.makeText(getApplicationContext(), "Recipe Deleted", Toast.LENGTH_SHORT).show();
+                System.out.println("Size: " + cookbook.size());
+                finish();
+            }
+        });
+
+        editRecipeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent editRecipeIntent = new Intent(ViewSelectedRecipe.this, RecipeMaker.class);
+                editRecipeIntent.putExtra("flag", "Edit");
+                editRecipeIntent.putExtra("editableRecipe", new RecipeWrapper(viewRecipe));
+                startActivityForResult(editRecipeIntent, 0);
+            }
+        });
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_CANCELED) {
+            return;
+        }
+        else {
+            switch (requestCode) {
+                case 0:
+                    RecipeWrapper recipeWrapper = (RecipeWrapper) data.getSerializableExtra("recipe");
+                    Recipe edittedRecipe = recipeWrapper.getRecipe();
+                    cookbook.updateRecipe(edittedRecipe);
+                    viewRecipe = edittedRecipe;
+                    setUp();
+            }
+        }
+    }
+
+    protected void setUp(){
         recipeName.setText(viewRecipe.getRecipeName());
         type.setText(viewRecipe.getType());
         category.setText(viewRecipe.getCategory());
@@ -69,16 +110,5 @@ public class ViewSelectedRecipe extends AppCompatActivity {
 
         instructionArrayListAdapter = new InstructionArrayListAdapter(this, viewRecipe.getListOfInstructions());
         listOfInstructions.setAdapter(instructionArrayListAdapter);
-
-        deleteRecipeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Cookbook cookbook = Cookbook.getInstance();
-                cookbook.deleteRecipe(viewRecipe);
-                Toast.makeText(getApplicationContext(), "Recipe Deleted", Toast.LENGTH_SHORT).show();
-                System.out.println("Size: " + cookbook.size());
-                finish();
-            }
-        });
     }
 }

@@ -71,4 +71,24 @@ public class Cookbook {
             return;
         }
     }
+
+    public void updateRecipe(Recipe edittedRecipe){
+        Boolean foundRecipe = false;
+        int index = 0;
+        for(Recipe r: listOfRecipes){
+            if(edittedRecipe.getRecipeName().equals(r.getRecipeName())){
+                foundRecipe = true;
+                index = listOfRecipes.indexOf(r);
+                break;
+            }
+        }
+
+        if(!foundRecipe) return;
+
+        edittedRecipe.setListOfIngredientsInJson();
+        edittedRecipe.setListOfInstructionsInJson();
+        listOfRecipes.set(index, edittedRecipe);
+        Recipe updateRecipe = edittedRecipe;
+        updateRecipe.update(edittedRecipe.getId());
+    }
 }

@@ -49,7 +49,8 @@ public class MainMenu extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent newRecipeIntent = new Intent(MainMenu.this, CreateNewRecipe.class);
+                Intent newRecipeIntent = new Intent(MainMenu.this, RecipeMaker.class);
+                newRecipeIntent.putExtra("flag", "New");
                 startActivityForResult(newRecipeIntent,0);
             }
         });

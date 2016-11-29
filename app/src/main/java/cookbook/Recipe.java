@@ -27,6 +27,8 @@ public class Recipe extends DataSupport implements Serializable {
     private String listOfIngredientsInJson;
     private String listOfInstructionsInJson;
 
+    public Recipe() {
+    }
 
     public Recipe(int cookTime, int prepTime, String recipeName, String type, String category, ArrayList<Ingredient> listOfIngredients, ArrayList<Instruction> listOfInstructions){
         Gson gson = new Gson();
@@ -43,7 +45,6 @@ public class Recipe extends DataSupport implements Serializable {
         this.listOfInstructions = listOfInstructions;
 
         listOfIngredientsInJson = gson.toJson(listOfIngredients);
-        System.out.println("listofIngredients: " + listOfIngredients);
         listOfInstructionsInJson = gson.toJson(listOfInstructions);
     }
 
@@ -107,23 +108,25 @@ public class Recipe extends DataSupport implements Serializable {
         return listOfIngredientsInJson;
     }
 
-    public void setListOfIngredientsInJson(String listOfIngredientsInJson) {
-        this.listOfIngredientsInJson = listOfIngredientsInJson;
+    public void setListOfIngredientsInJson() {
+        Gson gson = new Gson();
+        listOfIngredientsInJson = gson.toJson(listOfIngredients);
     }
 
     public String getListOfInstructionsInJson() {
         return listOfInstructionsInJson;
     }
 
-    public void setListOfInstructionsInJson(String listOfInstructionsInJson) {
-        this.listOfInstructionsInJson = listOfInstructionsInJson;
+    public void setListOfInstructionsInJson() {
+        Gson gson = new Gson();
+        listOfInstructionsInJson = gson.toJson(listOfInstructions);
     }
 
     public long getId() {
         return id;
     }
 
-    public void addIngredient(String amount, String name){
+    /*public void addIngredient(String amount, String name){
         Ingredient newIngredient = new Ingredient(amount,name);
         listOfIngredients.add(newIngredient);
     }
@@ -167,7 +170,7 @@ public class Recipe extends DataSupport implements Serializable {
             return;
         }
         listOfIngredients.remove(instruction);
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {

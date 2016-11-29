@@ -20,7 +20,7 @@ import cookbook.InstructionWrapper;
 import cookbook.Recipe;
 import cookbook.RecipeWrapper;
 
-public class CreateNewRecipe extends AppCompatActivity {
+public class RecipeMaker extends AppCompatActivity {
 
     private ArrayList<Ingredient> listOfIngredients = new ArrayList<Ingredient>();
     private ArrayList<Instruction> listOfInstructions = new ArrayList<Instruction>();
@@ -30,6 +30,9 @@ public class CreateNewRecipe extends AppCompatActivity {
     private EditText prepTime;
     private TextView typeSelected;
     private TextView categorySelected;
+
+    private String flagChecker;
+    private Recipe editThisRecipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,8 @@ public class CreateNewRecipe extends AppCompatActivity {
         Button resetBtn = (Button) findViewById(R.id.reset_recipe_btn);
         Button finishBtn = (Button) findViewById(R.id.finish_recipe_btn);
 
+        flagChecker = getIntent().getStringExtra("flag");
+        checkFlag(flagChecker);
 
         createIngredientBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -110,18 +115,38 @@ public class CreateNewRecipe extends AppCompatActivity {
                 String timeToPrep = String.valueOf(prepTime.getText().toString());
                 String typeOfRecipe = typeSelected.getText().toString();
                 String categoryOfRecipe = categorySelected.getText().toString();
-                if(nameOfRecipe.equals("") || timeToCook.equals("") || timeToPrep.equals("") || typeOfRecipe.equals("none") || categoryOfRecipe.equals("none")
-                        || listOfIngredients.isEmpty() || listOfInstructions.isEmpty()){
-                    Toast.makeText(getApplicationContext(), "You are missing some fields. Enter all fields first", Toast.LENGTH_SHORT).show();
-                    return;
+
+                if(flagChecker.equals("New")) {
+                    if (nameOfRecipe.equals("") || timeToCook.equals("") || timeToPrep.equals("") || typeOfRecipe.equals("none") || categoryOfRecipe.equals("none")
+                            || listOfIngredients.isEmpty() || listOfInstructions.isEmpty()) {
+                        Toast.makeText(getApplicationContext(), "You are missing some fields. Enter all fields first", Toast.LENGTH_SHORT).show();
+                        return;
+                    } else {
+                        Recipe newRecipe = new Recipe(Integer.parseInt(timeToCook), Integer.parseInt(timeToPrep),
+                                nameOfRecipe, typeOfRecipe, categoryOfRecipe, listOfIngredients, listOfInstructions);
+                        Intent returnIntent = new Intent();
+                        returnIntent.putExtra("recipe", new RecipeWrapper(newRecipe));
+                        setResult(RESULT_OK, returnIntent);
+                        finish();
+                    }
                 }
-                else{
-                    Recipe newRecipe = new Recipe(Integer.parseInt(timeToCook), Integer.parseInt(timeToPrep),
-                            nameOfRecipe,typeOfRecipe, categoryOfRecipe, listOfIngredients, listOfInstructions);
-                    Intent returnIntent = new Intent();
-                    returnIntent.putExtra("recipe", new RecipeWrapper(newRecipe));
-                    setResult(RESULT_OK, returnIntent);
-                    finish();
+                else if(flagChecker.equals("Edit")){
+                    if (nameOfRecipe.equals("") || timeToCook.equals("") || timeToPrep.equals("") || typeOfRecipe.equals("none") || categoryOfRecipe.equals("none")
+                            || listOfIngredients.isEmpty() || listOfInstructions.isEmpty()) {
+                        Toast.makeText(getApplicationContext(), "You are missing some fields. Enter all fields first", Toast.LENGTH_SHORT).show();
+                        return;
+                    } else {
+                        editThisRecipe.setCookTime(Integer.parseInt(timeToCook));
+                        editThisRecipe.setPrepTime(Integer.parseInt(timeToPrep));
+                        editThisRecipe.setType(typeOfRecipe);
+                        editThisRecipe.setCategory(categoryOfRecipe);
+                        editThisRecipe.setListOfIngredients(listOfIngredients);
+                        editThisRecipe.setListOfInstructions(listOfInstructions);
+                        Intent returnIntent = new Intent();
+                        returnIntent.putExtra("recipe", new RecipeWrapper(editThisRecipe));
+                        setResult(RESULT_OK, returnIntent);
+                        finish();
+                    }
                 }
             }
         });
@@ -179,4 +204,26 @@ public class CreateNewRecipe extends AppCompatActivity {
         categoryBuilder.show();
     }
 
+    protected void checkFlag(String flag){
+        if(flag.equals("New")){
+            Toast.makeText(getApplicationContext(), "Ready to make a New Recipe", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else if(flag.equals("Edit")){
+            RecipeWrapper editRecipeWrapper = (RecipeWrapper) getIntent().getSerializableExtra("editableRecipe");
+            editThisRecipe = editRecipeWrapper.getRecipe();
+
+            recipeName.setText(editThisRecipe.getRecipeName());
+            cookTime.setText(Integer.toString(editThisRecipe.getCookTime()));
+            prepTime.setText(Integer.toString(editThisRecipe.getPrepTime()));
+            typeSelected.setText(editThisRecipe.getType());
+            categorySelected.setText(editThisRecipe.getCategory());
+            listOfIngredients = editThisRecipe.getListOfIngredients();
+            listOfInstructions = editThisRecipe.getListOfInstructions();
+
+            recipeName.setEnabled(false);
+            Toast.makeText(getApplicationContext(), "Ready to Edit Recipe", Toast.LENGTH_SHORT).show();
+            return;
+        }
+    }
 }
