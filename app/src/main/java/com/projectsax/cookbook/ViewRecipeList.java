@@ -18,6 +18,8 @@ import cookbook.RecipeWrapper;
 public class ViewRecipeList extends AppCompatActivity {
 
     private ArrayList<Recipe> currentListOfRecipes;
+    private Cookbook cookbook = Cookbook.getInstance();
+    private ViewRecipeListAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,11 +27,11 @@ public class ViewRecipeList extends AppCompatActivity {
 
         ListView recipeList = (ListView) findViewById(R.id.listOfRecipes);
 
-        RecipeWrapper recipeWrapper = (RecipeWrapper) getIntent().getSerializableExtra("recipeList");
-        currentListOfRecipes = recipeWrapper.getRecipeList();
+        currentListOfRecipes = cookbook.getListOfRecipes();
 
-        ViewRecipeListAdapter adapter = new ViewRecipeListAdapter(this, currentListOfRecipes);
+        adapter = new ViewRecipeListAdapter(this, currentListOfRecipes);
         recipeList.setAdapter(adapter);
+
         recipeList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
             @Override
@@ -41,5 +43,12 @@ public class ViewRecipeList extends AppCompatActivity {
                 startActivity(openRecipeIntent);
             }
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        currentListOfRecipes = cookbook.getListOfRecipes();
+        adapter.notifyDataSetChanged();
     }
 }

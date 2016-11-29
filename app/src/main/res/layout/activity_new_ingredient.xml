@@ -20,7 +20,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="80px"
+            android:layout_height="60dp"
             android:weightSum="1">
 
             <TextView
@@ -46,7 +46,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="80px"
+            android:layout_height="60dp"
             android:layout_weight="0.04">
 
             <TextView
@@ -82,7 +82,6 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:layout_gravity="center_horizontal"
             android:layout_weight="0.35">
 
             <Button

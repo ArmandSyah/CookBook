@@ -1,21 +1,39 @@
 package cookbook;
 
+import com.google.gson.Gson;
+
+import org.litepal.annotation.Column;
 import org.litepal.crud.DataSupport;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Recipe extends DataSupport implements Serializable {
 
+    private long id;
+    @Column(ignore = true)
+    private final long idRange = 123456789L;
+
     private int cookTime;
     private int prepTime;
+    @Column(unique = true)
     private String recipeName;
     private String type;
     private String category;
     private ArrayList<Ingredient> listOfIngredients;
     private ArrayList<Instruction> listOfInstructions;
 
-    public Recipe(int cookTime, int prepTime, String recipeName, String type, String category, ArrayList listOfIngredients, ArrayList listOfInstructions){
+    private String listOfIngredientsInJson;
+    private String listOfInstructionsInJson;
+
+
+    public Recipe(int cookTime, int prepTime, String recipeName, String type, String category, ArrayList<Ingredient> listOfIngredients, ArrayList<Instruction> listOfInstructions){
+        Gson gson = new Gson();
+
+        Random random = new Random();
+        id = (long) (random.nextLong()*idRange);
+
         this.cookTime = cookTime;
         this.prepTime = prepTime;
         this.recipeName = recipeName;
@@ -23,6 +41,10 @@ public class Recipe extends DataSupport implements Serializable {
         this.category = category;
         this.listOfIngredients = listOfIngredients;
         this.listOfInstructions = listOfInstructions;
+
+        listOfIngredientsInJson = gson.toJson(listOfIngredients);
+        System.out.println("listofIngredients: " + listOfIngredients);
+        listOfInstructionsInJson = gson.toJson(listOfInstructions);
     }
 
     public int getCookTime() {
@@ -69,7 +91,7 @@ public class Recipe extends DataSupport implements Serializable {
         return listOfIngredients;
     }
 
-    public void setListOfIngredients(ArrayList<Ingredient> listOfIngredients) {
+    public void setListOfIngredients(ArrayList <Ingredient> listOfIngredients) {
         this.listOfIngredients = listOfIngredients;
     }
 
@@ -79,6 +101,26 @@ public class Recipe extends DataSupport implements Serializable {
 
     public void setListOfInstructions(ArrayList<Instruction> listOfInstructions) {
         this.listOfInstructions = listOfInstructions;
+    }
+
+    public String getListOfIngredientsInJson() {
+        return listOfIngredientsInJson;
+    }
+
+    public void setListOfIngredientsInJson(String listOfIngredientsInJson) {
+        this.listOfIngredientsInJson = listOfIngredientsInJson;
+    }
+
+    public String getListOfInstructionsInJson() {
+        return listOfInstructionsInJson;
+    }
+
+    public void setListOfInstructionsInJson(String listOfInstructionsInJson) {
+        this.listOfInstructionsInJson = listOfInstructionsInJson;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public void addIngredient(String amount, String name){
@@ -125,5 +167,37 @@ public class Recipe extends DataSupport implements Serializable {
             return;
         }
         listOfIngredients.remove(instruction);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Recipe recipe = (Recipe) o;
+
+        if (cookTime != recipe.cookTime) return false;
+        if (prepTime != recipe.prepTime) return false;
+        if (recipeName != null ? !recipeName.equals(recipe.recipeName) : recipe.recipeName != null)
+            return false;
+        if (type != null ? !type.equals(recipe.type) : recipe.type != null) return false;
+        if (category != null ? !category.equals(recipe.category) : recipe.category != null)
+            return false;
+        if (listOfIngredients != null ? !listOfIngredients.equals(recipe.listOfIngredients) : recipe.listOfIngredients != null)
+            return false;
+        return listOfInstructions != null ? listOfInstructions.equals(recipe.listOfInstructions) : recipe.listOfInstructions == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = cookTime;
+        result = 31 * result + prepTime;
+        result = 31 * result + (recipeName != null ? recipeName.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (category != null ? category.hashCode() : 0);
+        result = 31 * result + (listOfIngredients != null ? listOfIngredients.hashCode() : 0);
+        result = 31 * result + (listOfInstructions != null ? listOfInstructions.hashCode() : 0);
+        return result;
     }
 }

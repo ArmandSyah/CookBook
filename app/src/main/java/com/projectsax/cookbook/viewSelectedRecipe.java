@@ -11,7 +11,10 @@ import android.widget.Toast;
 import com.projectsax.cookbook.adapterpackage.IngredientArrayListAdapter;
 import com.projectsax.cookbook.adapterpackage.InstructionArrayListAdapter;
 
+import java.util.ArrayList;
+
 import cookbook.Cookbook;
+import cookbook.Ingredient;
 import cookbook.Recipe;
 import cookbook.RecipeWrapper;
 
@@ -50,11 +53,16 @@ public class ViewSelectedRecipe extends AppCompatActivity {
         listOfIngredients = (ListView) findViewById(R.id.listOfIngredients);
         listOfInstructions = (ListView) findViewById(R.id.listOfInstructions);
 
+        ArrayList<Ingredient> ingre = viewRecipe.getListOfIngredients();
+        /*for(Ingredient i: ingre){
+            System.out.println(i);
+        }*/
+
         recipeName.setText(viewRecipe.getRecipeName());
         type.setText(viewRecipe.getType());
         category.setText(viewRecipe.getCategory());
-        prepTime.setText(String.valueOf(viewRecipe.getPrepTime()));
-        cookTime.setText(String.valueOf(viewRecipe.getCookTime()));
+        prepTime.setText(String.valueOf(viewRecipe.getPrepTime()) + " mins");
+        cookTime.setText(String.valueOf(viewRecipe.getCookTime()) + " mins");
 
         ingredientArrayListAdapter = new IngredientArrayListAdapter(this, viewRecipe.getListOfIngredients());
         listOfIngredients.setAdapter(ingredientArrayListAdapter);
@@ -68,6 +76,7 @@ public class ViewSelectedRecipe extends AppCompatActivity {
                 Cookbook cookbook = Cookbook.getInstance();
                 cookbook.deleteRecipe(viewRecipe);
                 Toast.makeText(getApplicationContext(), "Recipe Deleted", Toast.LENGTH_SHORT).show();
+                System.out.println("Size: " + cookbook.size());
                 finish();
             }
         });

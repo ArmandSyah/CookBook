@@ -54,7 +54,7 @@
                 android:text="New Recipe"
                 android:id="@+id/new_recipe_btn"
                 android:layout_gravity="center_horizontal"
-                android:layout_weight="0.21" />
+                android:layout_weight="0.17" />
 
             <Button
                 android:layout_width="274dp"

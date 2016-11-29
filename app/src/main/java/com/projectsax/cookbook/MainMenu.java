@@ -15,7 +15,7 @@ import cookbook.RecipeWrapper;
 
 public class MainMenu extends AppCompatActivity {
 
-    private Cookbook cookbook = Cookbook.getInstance();
+    private Cookbook cookbook;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +25,7 @@ public class MainMenu extends AppCompatActivity {
         Button searchBtn = (Button) findViewById(R.id.search_recipe_btn);
         Button newBtn = (Button) findViewById(R.id.new_recipe_btn);
 
+        cookbook = Cookbook.getInstance();
         viewBtn.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -57,7 +58,6 @@ public class MainMenu extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_CANCELED) {
-            Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
             return;
         }
         else {
