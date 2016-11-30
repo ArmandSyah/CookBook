@@ -1,5 +1,6 @@
 package cookbook;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.google.gson.Gson;
@@ -70,6 +71,137 @@ public class Cookbook {
             System.out.println(listOfRecipes.contains(deleteThisRecipe));
             return;
         }
+    }
+
+    public ArrayList<Recipe> searchRecipe(String selectedCategory, String selectedType, ArrayList<Ingredient> andIngredients,
+                                          ArrayList<Ingredient> orIngredients, ArrayList<Ingredient> notIngredients,
+                                          ArrayList<Ingredient> allListedIngredients){
+
+        ArrayList<Recipe> queriedRecipes = new ArrayList<Recipe>();
+
+        ArrayList<Recipe> foundRecipesByCategory = new ArrayList<Recipe>();
+        ArrayList<Recipe> foundRecipesByType = new ArrayList<Recipe>();
+
+        ArrayList<Recipe> foundConjunctiveRecipes = new ArrayList<Recipe>();
+        ArrayList<Recipe> foundDisjunctiveRecipes = new ArrayList<Recipe>();
+        ArrayList<Recipe> foundDiscludedRecipes = new ArrayList<Recipe>();
+
+        if(!allListedIngredients.isEmpty()){
+            for(Recipe r: listOfRecipes){
+                ArrayList<Ingredient> ingredients = r.getListOfIngredients();
+                for(Ingredient i: allListedIngredients){
+                    if(ingredients.contains(i)){
+                        queriedRecipes.add(r);
+                        break;
+                    }
+                }
+            }
+        }
+
+        if(!selectedCategory.isEmpty()){
+           foundRecipesByCategory
+                   = (ArrayList<Recipe>) DataSupport.where("category = ?", selectedCategory).find(Recipe.class);
+
+            for(Recipe r: foundRecipesByCategory){
+                String outputArrayListIngredients = r.getListOfIngredientsInJson();
+                Type typeIngredient = new TypeToken<ArrayList<Ingredient>>() {}.getType();
+                ArrayList<Ingredient> ingredientList = gson.fromJson(outputArrayListIngredients, typeIngredient);
+                r.setListOfIngredients(ingredientList);
+
+                String outputArrayListInstructions = r.getListOfInstructionsInJson();
+                Type typeInstruction = new TypeToken<ArrayList<Instruction>>() {}.getType();
+                ArrayList<Instruction> instructionList = gson.fromJson(outputArrayListInstructions, typeInstruction);
+                r.setListOfInstructions(instructionList);
+            }
+        }
+        if(!selectedType.isEmpty()){
+            foundRecipesByType
+                    = (ArrayList<Recipe>) DataSupport.where("type = ?", selectedType).find(Recipe.class);
+
+            for(Recipe r: foundRecipesByType){
+                String outputArrayListIngredients = r.getListOfIngredientsInJson();
+                Type typeIngredient = new TypeToken<ArrayList<Ingredient>>() {}.getType();
+                ArrayList<Ingredient> ingredientList = gson.fromJson(outputArrayListIngredients, typeIngredient);
+                r.setListOfIngredients(ingredientList);
+
+                String outputArrayListInstructions = r.getListOfInstructionsInJson();
+                Type typeInstruction = new TypeToken<ArrayList<Instruction>>() {}.getType();
+                ArrayList<Instruction> instructionList = gson.fromJson(outputArrayListInstructions, typeInstruction);
+                r.setListOfInstructions(instructionList);
+            }
+        }
+
+        if(!andIngredients.isEmpty()){
+            for (Recipe r : listOfRecipes) {
+                ArrayList<Ingredient> ingredientsInCurrentRecipe = r.getListOfIngredients();
+                if (ingredientsInCurrentRecipe.containsAll(andIngredients)) {
+                    System.out.println("Trace true");
+                    foundConjunctiveRecipes.add(r);
+                }
+            }
+            queriedRecipes.addAll(foundConjunctiveRecipes);
+        }
+
+        if(!orIngredients.isEmpty()){
+            for(Recipe r: listOfRecipes){
+                ArrayList<Ingredient> ingredientsInCurrentRecipe = r.getListOfIngredients();
+                for(Ingredient i: orIngredients){
+                    if(ingredientsInCurrentRecipe.contains(i)){
+                        foundDisjunctiveRecipes.add(r);
+                        break;
+                    }
+                }
+            }
+            queriedRecipes.addAll(foundDisjunctiveRecipes);
+        }
+
+        if(!notIngredients.isEmpty()){
+            for(Recipe r: listOfRecipes){
+                ArrayList<Ingredient> ingredientsInCurrentRecipe = r.getListOfIngredients();
+                for(Ingredient i: notIngredients){
+                    if(ingredientsInCurrentRecipe.contains(i)){
+                        foundDiscludedRecipes.add(r);
+                        break;
+                    }
+                }
+            }
+        }
+
+
+        if(!foundRecipesByCategory.isEmpty() && !foundRecipesByType.isEmpty()) {
+            ArrayList<Recipe> biggerList = foundRecipesByCategory.size() >= foundRecipesByType.size()
+                    ? foundRecipesByCategory : foundRecipesByType;
+            ArrayList<Recipe> smallerList = foundRecipesByCategory.size() < foundRecipesByType.size()
+                    ? foundRecipesByCategory : foundRecipesByType;
+            int index = 0;
+            while (index < smallerList.size()) {
+                if (biggerList.contains(smallerList.get(index))) {
+                    queriedRecipes.add(smallerList.get(index));
+                }
+                index++;
+            }
+        }
+        else{
+            queriedRecipes.addAll(foundRecipesByCategory);
+            queriedRecipes.addAll(foundRecipesByType);
+        }
+
+        if(!foundDiscludedRecipes.isEmpty()) {
+          if(queriedRecipes.isEmpty()){
+              for(Recipe r: listOfRecipes){
+                  queriedRecipes.add(r);
+              }
+              queriedRecipes.removeAll(foundDiscludedRecipes);
+          }
+          else{
+              queriedRecipes.removeAll(foundDiscludedRecipes);
+          }
+        }
+
+        for(Recipe r: listOfRecipes){
+            System.out.println(r.getRecipeName());
+        }
+        return queriedRecipes;
     }
 
     public void updateRecipe(Recipe edittedRecipe){

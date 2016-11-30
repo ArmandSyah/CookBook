@@ -37,4 +37,9 @@ public class ViewRecipeListAdapter extends ArrayAdapter<Recipe> {
 
         return rowView;
     }
+
+    @Override
+    public int getCount() {
+        return listOfRecipes != null ? listOfRecipes.size() : 0;
+    }
 }

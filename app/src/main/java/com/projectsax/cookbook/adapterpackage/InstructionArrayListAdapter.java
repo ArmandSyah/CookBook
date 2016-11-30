@@ -37,4 +37,9 @@ public class InstructionArrayListAdapter extends ArrayAdapter<Instruction> {
         step.setText(i.getStep());
         return rowView;
     }
+
+    @Override
+    public int getCount() {
+        return instructions != null ? instructions.size() : 0;
+    }
 }

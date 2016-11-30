@@ -37,4 +37,9 @@ public class IngredientArrayListAdapter extends ArrayAdapter<Ingredient> {
         ingredientName.setText(i.getName());
         return rowView;
     }
+
+    @Override
+    public int getCount() {
+        return ingredients != null ? ingredients.size() : 0;
+    }
 }

@@ -20,9 +20,11 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="40dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/recipeName" />
+            android:id="@+id/recipeName"
+            android:visibility="visible"
+            android:textColor="#000000"/>
     </LinearLayout>
 
 </RelativeLayout>

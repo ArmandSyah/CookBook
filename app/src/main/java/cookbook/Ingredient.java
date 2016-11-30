@@ -11,6 +11,11 @@ public class Ingredient implements Serializable {
     private String amount;
     private String name;
 
+    public Ingredient(String name){
+        this.amount = "";
+        this.name = name;
+    }
+
     public Ingredient(String amount, String name){
         this.amount = amount;
         this.name = name;
@@ -39,8 +44,7 @@ public class Ingredient implements Serializable {
 
         Ingredient that = (Ingredient) o;
 
-        if (amount != null ? !amount.equals(that.amount) : that.amount != null) return false;
-        return name != null ? name.equals(that.name) : that.name == null;
+        return name.equals(that.name);
 
     }
 
