@@ -12,7 +12,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="65dp"
         android:id="@+id/linearLayout"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -24,8 +24,8 @@
             android:id="@+id/typeImage" />
 
         <TextView
-            android:layout_width="164dp"
-            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/recipeName"
             android:visibility="visible"

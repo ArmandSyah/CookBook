@@ -158,18 +158,11 @@ public class Cookbook {
         }
 
         if(!foundDiscludedRecipes.isEmpty()) {
-          System.out.println("Trace Not");
-          System.out.println(!foundDiscludedRecipes.isEmpty());
           if(queriedRecipes.isEmpty()){
-              System.out.println("Trace query empty");
               queriedRecipes.addAll(listOfRecipes);
               queriedRecipes.removeAll(foundDiscludedRecipes);
           }
           else{
-              System.out.println("Trace query filled sorta");
-              for(Recipe r: queriedRecipes){
-                  System.out.println("Recipe: " + r.getRecipeName());
-              }
               queriedRecipes.removeAll(foundDiscludedRecipes);
           }
         }
