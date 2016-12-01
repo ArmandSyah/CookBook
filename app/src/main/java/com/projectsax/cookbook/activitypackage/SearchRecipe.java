@@ -101,9 +101,6 @@ public class SearchRecipe extends AppCompatActivity {
                 String searchBar = searchField.getText().toString();
                 String[] ingredientSearchQuery = searchBar.split(" ");
 
-                System.out.println(ingredientSearchQuery.length);
-                System.out.println(ingredientSearchQuery[0]);
-
                 ArrayList<Ingredient> allListedIngredients = new ArrayList<Ingredient>();
                 ArrayList<Ingredient> andIngredients = new ArrayList<Ingredient>();
                 ArrayList<Ingredient> orIngredients = new ArrayList<Ingredient>();
@@ -113,21 +110,33 @@ public class SearchRecipe extends AppCompatActivity {
                     if (ingredientSearchQuery[i].toUpperCase().equals("AND")) {
                         Ingredient ingredientNameBefore = new Ingredient(ingredientSearchQuery[i - 1]);
                         Ingredient ingredientNameAfter = new Ingredient(ingredientSearchQuery[i + 1]);
-                        if (!andIngredients.contains(ingredientNameBefore)) {
-                            andIngredients.add(ingredientNameBefore);
+                        if(!orIngredients.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Don't use both And & Or Booleans, pick 1" , Toast.LENGTH_SHORT).show();
+                            return;
                         }
-                        if (!andIngredients.contains(ingredientNameAfter)) {
-                            andIngredients.add(ingredientNameAfter);
+                        else {
+                            if (!andIngredients.contains(ingredientNameBefore)) {
+                                andIngredients.add(ingredientNameBefore);
+                            }
+                            if (!andIngredients.contains(ingredientNameAfter)) {
+                                andIngredients.add(ingredientNameAfter);
+                            }
                         }
                     }
                     else if (ingredientSearchQuery[i].toUpperCase().equals("OR")) {
                         Ingredient ingredientNameBefore = new Ingredient(ingredientSearchQuery[i - 1]);
                         Ingredient ingredientNameAfter = new Ingredient(ingredientSearchQuery[i + 1]);
-                        if (!orIngredients.contains(ingredientNameBefore)) {
-                            orIngredients.add(ingredientNameBefore);
+                        if(!andIngredients.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Don't use both And & Or Booleans, pick 1" , Toast.LENGTH_SHORT).show();
+                            return;
                         }
-                        if (!orIngredients.contains(ingredientNameAfter)) {
-                            orIngredients.add(ingredientNameAfter);
+                        else {
+                            if (!orIngredients.contains(ingredientNameBefore)) {
+                                orIngredients.add(ingredientNameBefore);
+                            }
+                            if (!orIngredients.contains(ingredientNameAfter)) {
+                                orIngredients.add(ingredientNameAfter);
+                            }
                         }
                     }
                     else if (ingredientSearchQuery[i].toUpperCase().equals("NOT")) {
@@ -215,6 +224,7 @@ public class SearchRecipe extends AppCompatActivity {
                 "\nEx: 'Tomatoes and Onion' Searches for recipes that INCLUDES both Tomatoes and Onion\n" +
                 "\nEx: 'Tomatoes or Onion' Searches for recipes that has EITHER Tomatoes or Onion\n" +
                 "\nEx: 'Not Tomatoes' Searches for recipes that don't have Tomatoes in them\n" +
+                "\nDon't mix And & Or booleans in the search query\n" +
                 "\nIf you choose not to use boolean operators in your search, that's fine, the program will simply find recipes that match" +
                 " your list of given ingredients\n" +
                 "\nWhen you are done searching, press the search button to have the querries appear\n" +

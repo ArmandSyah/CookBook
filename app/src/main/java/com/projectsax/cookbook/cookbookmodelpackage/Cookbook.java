@@ -78,11 +78,14 @@ public class Cookbook {
         ArrayList<Recipe> foundGeneralRecipes = new ArrayList<Recipe>();
 
         if(!allListedIngredients.isEmpty()){
+            System.out.println("Trace gen");
             for(Recipe r: listOfRecipes){
                 ArrayList<Ingredient> ingredients = r.getListOfIngredients();
                 for(Ingredient i: allListedIngredients){
                     if(ingredients.contains(i)){
+                        System.out.println("Trace I");
                         foundGeneralRecipes.add(r);
+                        System.out.println(r.getRecipeName());
                         break;
                     }
                 }
@@ -139,22 +142,81 @@ public class Cookbook {
         }
 
 
-        if(!foundRecipesByCategory.isEmpty() && !foundRecipesByType.isEmpty()) {
-            ArrayList<Recipe> biggerList = foundRecipesByCategory.size() >= foundRecipesByType.size()
-                    ? foundRecipesByCategory : foundRecipesByType;
-            ArrayList<Recipe> smallerList = foundRecipesByCategory.size() < foundRecipesByType.size()
-                    ? foundRecipesByCategory : foundRecipesByType;
-            int index = 0;
-            while (index < smallerList.size()) {
-                if (biggerList.contains(smallerList.get(index))) {
-                    queriedRecipes.add(smallerList.get(index));
+        ArrayList<Recipe> recipesToRemove = new ArrayList<Recipe>();
+        if(queriedRecipes.isEmpty()) {
+            if (!foundRecipesByCategory.isEmpty() && !foundRecipesByType.isEmpty()) {
+                queriedRecipes.addAll(listOfRecipes);
+                ArrayList<Recipe> recipeWithBothTypeAndCategory = new ArrayList<Recipe>();
+                ArrayList<Recipe> biggerList = foundRecipesByCategory.size() >= foundRecipesByType.size()
+                        ? foundRecipesByCategory : foundRecipesByType;
+                ArrayList<Recipe> smallerList = foundRecipesByCategory.size() < foundRecipesByType.size()
+                        ? foundRecipesByCategory : foundRecipesByType;
+                int index = 0;
+                while (index < smallerList.size()) {
+                    if (biggerList.contains(smallerList.get(index))) {
+                        recipeWithBothTypeAndCategory.add(smallerList.get(index));
+                    }
+                    index++;
                 }
-                index++;
+                for (Recipe r : queriedRecipes) {
+                    if (!recipeWithBothTypeAndCategory.contains(r)) {
+                        recipesToRemove.add(r);
+                    }
+                }
+                queriedRecipes.removeAll(recipesToRemove);
+            } else if (!foundRecipesByCategory.isEmpty()) {
+                queriedRecipes.addAll(listOfRecipes);
+                for (Recipe r : queriedRecipes) {
+                    if (!foundRecipesByCategory.contains(r)) {
+                        recipesToRemove.add(r);
+                    }
+                }
+                queriedRecipes.removeAll(recipesToRemove);
+            } else if (!foundRecipesByType.isEmpty()) {
+                queriedRecipes.addAll(listOfRecipes);
+                for (Recipe r : queriedRecipes) {
+                    if (!foundRecipesByType.contains(r)) {
+                        recipesToRemove.add(r);
+                    }
+                }
+                queriedRecipes.removeAll(recipesToRemove);
             }
         }
         else{
-            queriedRecipes.addAll(foundRecipesByCategory);
-            queriedRecipes.addAll(foundRecipesByType);
+            if (!foundRecipesByCategory.isEmpty() && !foundRecipesByType.isEmpty()) {
+                ArrayList<Recipe> recipeWithBothTypeAndCategory = new ArrayList<Recipe>();
+                ArrayList<Recipe> biggerList = foundRecipesByCategory.size() >= foundRecipesByType.size()
+                        ? foundRecipesByCategory : foundRecipesByType;
+                ArrayList<Recipe> smallerList = foundRecipesByCategory.size() < foundRecipesByType.size()
+                        ? foundRecipesByCategory : foundRecipesByType;
+                int index = 0;
+                while (index < smallerList.size()) {
+                    if (biggerList.contains(smallerList.get(index))) {
+                        recipeWithBothTypeAndCategory.add(smallerList.get(index));
+                    }
+                    index++;
+                }
+                for (Recipe r : queriedRecipes) {
+                    if (!recipeWithBothTypeAndCategory.contains(r)) {
+                        recipesToRemove.add(r);
+                    }
+                }
+                queriedRecipes.removeAll(recipesToRemove);
+            } else if (!foundRecipesByCategory.isEmpty()) {
+                for (Recipe r : queriedRecipes) {
+                    if (!foundRecipesByCategory.contains(r)) {
+                        recipesToRemove.add(r);
+                    }
+                }
+                queriedRecipes.removeAll(recipesToRemove);
+            } else if (!foundRecipesByType.isEmpty()) {
+                for (Recipe r : queriedRecipes) {
+                    if (!foundRecipesByType.contains(r)) {
+                        recipesToRemove.add(r);
+                    }
+                }
+                queriedRecipes.removeAll(recipesToRemove);
+            }
         }
 
         if(!foundDiscludedRecipes.isEmpty()) {
@@ -168,6 +230,7 @@ public class Cookbook {
         }
 
         if(foundConjunctiveRecipes.isEmpty() && foundDisjunctiveRecipes.isEmpty() && foundDiscludedRecipes.isEmpty()){
+            System.out.println("Trace");
             queriedRecipes.addAll(foundGeneralRecipes);
         }
 
@@ -175,6 +238,10 @@ public class Cookbook {
         temporaryHolder.addAll(queriedRecipes);
         queriedRecipes.clear();
         queriedRecipes.addAll(temporaryHolder);
+        System.out.println("trace fill: " + queriedRecipes.isEmpty());
+        for(Recipe r: queriedRecipes){
+            System.out.println(r.getRecipeName());
+        }
         return queriedRecipes;
     }
 
