@@ -1,6 +1,8 @@
-package com.projectsax.cookbook;
+package com.projectsax.cookbook.activitypackage;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,12 +11,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.projectsax.cookbook.R;
 import com.projectsax.cookbook.adapterpackage.InstructionArrayListAdapter;
 
 import java.util.ArrayList;
 
-import cookbook.Instruction;
-import cookbook.InstructionWrapper;
+import com.projectsax.cookbook.cookbookmodelpackage.Instruction;
+import com.projectsax.cookbook.cookbookmodelpackage.InstructionWrapper;
 
 public class NewInstruction extends AppCompatActivity {
 
@@ -32,6 +35,7 @@ public class NewInstruction extends AppCompatActivity {
         Button addInstructionBtn = (Button) findViewById(R.id.add_instruction_btn);
         Button resetInstructionBtn = (Button) findViewById(R.id.reset_instruction_btn);
         Button finishInstructionBtn = (Button) findViewById(R.id.finish_instruction_btn);
+        Button helpBtn = (Button) findViewById(R.id.help_instruction_btn);
 
         stepNum = (EditText) findViewById(R.id.stepNum);
         step = (EditText) findViewById(R.id.step);
@@ -86,5 +90,29 @@ public class NewInstruction extends AppCompatActivity {
                 finish();
             }
         });
+
+        helpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                helpDialog();
+            }
+        });
+    }
+
+    protected void helpDialog(){
+        AlertDialog helpDialog =  new AlertDialog.Builder(NewInstruction.this).create();
+        helpDialog.setTitle("How to Add Instructions");
+        helpDialog.setMessage("Enter the step number of the instruction in the field beside stepnum\n" +
+                "\nEnter the instruction in the field beside step\n" +
+                "\nWhen both fields are full, press the add button, which will display your instruction on the list\n" +
+                "\nIf you messed up in making your list of instructions, pressing reset button will clear the list\n" +
+                "\nWhen you are done, press the finish button");
+        helpDialog.setButton(helpDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        helpDialog.show();
     }
 }

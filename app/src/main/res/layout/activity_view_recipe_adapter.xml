@@ -18,13 +18,19 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
+        <ImageView
+            android:layout_width="38dp"
+            android:layout_height="match_parent"
+            android:id="@+id/typeImage" />
+
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="164dp"
             android:layout_height="40dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/recipeName"
             android:visibility="visible"
             android:textColor="#000000"/>
+
     </LinearLayout>
 
 </RelativeLayout>

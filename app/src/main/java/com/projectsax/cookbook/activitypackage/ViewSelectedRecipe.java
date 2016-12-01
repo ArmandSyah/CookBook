@@ -1,6 +1,8 @@
-package com.projectsax.cookbook;
+package com.projectsax.cookbook.activitypackage;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,15 +11,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.projectsax.cookbook.R;
 import com.projectsax.cookbook.adapterpackage.IngredientArrayListAdapter;
 import com.projectsax.cookbook.adapterpackage.InstructionArrayListAdapter;
 
-import java.util.ArrayList;
-
-import cookbook.Cookbook;
-import cookbook.Ingredient;
-import cookbook.Recipe;
-import cookbook.RecipeWrapper;
+import com.projectsax.cookbook.cookbookmodelpackage.Cookbook;
+import com.projectsax.cookbook.cookbookmodelpackage.Recipe;
+import com.projectsax.cookbook.cookbookmodelpackage.RecipeWrapper;
 
 public class ViewSelectedRecipe extends AppCompatActivity {
 
@@ -44,6 +44,7 @@ public class ViewSelectedRecipe extends AppCompatActivity {
 
         Button deleteRecipeBtn = (Button) findViewById(R.id.delete_recipe_btn);
         Button editRecipeBtn = (Button) findViewById(R.id.edit_recipe_btn);
+        Button helpBtn = (Button) findViewById(R.id.help_selected_recipe_btn);
 
         recipeWrapper = (RecipeWrapper) getIntent().getSerializableExtra("recipe");
         viewRecipe = recipeWrapper.getRecipe();
@@ -57,7 +58,7 @@ public class ViewSelectedRecipe extends AppCompatActivity {
         listOfIngredients = (ListView) findViewById(R.id.listOfIngredients);
         listOfInstructions = (ListView) findViewById(R.id.listOfInstructions);
 
-       setUp();
+        setUp();
 
         deleteRecipeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +78,13 @@ public class ViewSelectedRecipe extends AppCompatActivity {
                 editRecipeIntent.putExtra("flag", "Edit");
                 editRecipeIntent.putExtra("editableRecipe", new RecipeWrapper(viewRecipe));
                 startActivityForResult(editRecipeIntent, 0);
+            }
+        });
+
+        helpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                helpDialog();
             }
         });
     }
@@ -110,5 +118,20 @@ public class ViewSelectedRecipe extends AppCompatActivity {
 
         instructionArrayListAdapter = new InstructionArrayListAdapter(this, viewRecipe.getListOfInstructions());
         listOfInstructions.setAdapter(instructionArrayListAdapter);
+    }
+
+    protected void helpDialog(){
+        AlertDialog helpDialog =  new AlertDialog.Builder(ViewSelectedRecipe.this).create();
+        helpDialog.setTitle("You are now viewing your selected Recipe");
+        helpDialog.setMessage("This screen shows information about the recipe you selected\n" +
+                "\nIf you want to delete it, press the delete button\n" +
+                "\nIf you want to edit it, press the edit button");
+        helpDialog.setButton(helpDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        helpDialog.show();
     }
 }

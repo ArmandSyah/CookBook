@@ -9,19 +9,19 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainMenu">
+        <activity android:name=".activitypackage.MainMenu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ViewRecipeList" />
-        <activity android:name=".SearchRecipe" />
-        <activity android:name=".RecipeMaker" />
-        <activity android:name=".NewIngredient" />
-        <activity android:name=".NewInstruction" />
-        <activity android:name=".ViewSelectedRecipe" />
+        <activity android:name=".activitypackage.ViewRecipeList" />
+        <activity android:name=".activitypackage.SearchRecipe" />
+        <activity android:name=".activitypackage.RecipeMaker" />
+        <activity android:name=".activitypackage.NewIngredient" />
+        <activity android:name=".activitypackage.NewInstruction" />
+        <activity android:name=".activitypackage.ViewSelectedRecipe" />
     </application>
 
 </manifest>

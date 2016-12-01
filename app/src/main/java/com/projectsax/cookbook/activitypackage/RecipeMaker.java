@@ -1,4 +1,4 @@
-package com.projectsax.cookbook;
+package com.projectsax.cookbook.activitypackage;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,14 +11,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.projectsax.cookbook.R;
+
 import java.util.ArrayList;
 
-import cookbook.Ingredient;
-import cookbook.IngredientWrapper;
-import cookbook.Instruction;
-import cookbook.InstructionWrapper;
-import cookbook.Recipe;
-import cookbook.RecipeWrapper;
+import com.projectsax.cookbook.cookbookmodelpackage.Ingredient;
+import com.projectsax.cookbook.cookbookmodelpackage.IngredientWrapper;
+import com.projectsax.cookbook.cookbookmodelpackage.Instruction;
+import com.projectsax.cookbook.cookbookmodelpackage.InstructionWrapper;
+import com.projectsax.cookbook.cookbookmodelpackage.Recipe;
+import com.projectsax.cookbook.cookbookmodelpackage.RecipeWrapper;
 
 public class RecipeMaker extends AppCompatActivity {
 
@@ -51,6 +53,7 @@ public class RecipeMaker extends AppCompatActivity {
         Button selectCategoryBtn = (Button) findViewById(R.id.select_category);
         Button resetBtn = (Button) findViewById(R.id.reset_recipe_btn);
         Button finishBtn = (Button) findViewById(R.id.finish_recipe_btn);
+        Button helpBtn = (Button) findViewById(R.id.help_recipe_maker_btn);
 
         flagChecker = getIntent().getStringExtra("flag");
         checkFlag(flagChecker);
@@ -150,6 +153,13 @@ public class RecipeMaker extends AppCompatActivity {
                 }
             }
         });
+
+        helpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                helpDialog();
+            }
+        });
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
@@ -225,5 +235,26 @@ public class RecipeMaker extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Ready to Edit Recipe", Toast.LENGTH_SHORT).show();
             return;
         }
+    }
+
+    protected void helpDialog(){
+        AlertDialog helpDialog =  new AlertDialog.Builder(RecipeMaker.this).create();
+        helpDialog.setTitle("How to Create new/Edit Recipe");
+        helpDialog.setMessage("Type in Recipe name in the textfield beside 'Enter Recipe Name' \n" +
+                "\nEnter in number of minutes for cooktime and preptime (field only takes an Integer) \n" +
+                "\nPress the Enter Ingredient Button to open up a new screen where you can add your ingredients \n" +
+                "\nPress the Enter Instruction Button to open up a new screen where you can add your instruction \n" +
+                "\nPress the select button near type to open up a dialog with list of types you can select\n" +
+                "\nPress the select button near category to open up a dialog with list of categories you can select\n" +
+                "\nPress Finish Button when you are finished making your recipe (All Fields (including the instruction and ingredients)" +
+                " must be entered, otherwise the app will prompt you to fill in the missing fields) \n" +
+                "\nPress Reset to clear all the fields (including instruction and ingredients)");
+        helpDialog.setButton(helpDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        helpDialog.show();
     }
 }

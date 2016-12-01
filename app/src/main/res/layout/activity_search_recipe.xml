@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.projectsax.cookbook.SearchRecipe">
+    tools:context=".activitypackage.SearchRecipe">
 
     <LinearLayout
         android:orientation="vertical"
@@ -20,7 +20,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="43dp"
-            android:layout_weight="0.30">
+            android:layout_weight="0.52">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -28,20 +28,21 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Category:"
                 android:id="@+id/textView20"
-                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="10dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:id="@+id/categorySearch"
-                android:layout_alignParentTop="true"
+                android:layout_alignTop="@+id/textView20"
                 android:layout_toRightOf="@+id/textView20"
                 android:layout_toEndOf="@+id/textView20"
-                android:layout_marginLeft="14dp"
-                android:layout_marginStart="14dp" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
@@ -49,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:text="Select Category"
                 android:id="@+id/search_category_btn"
-                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
@@ -59,7 +60,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Type:"
                 android:id="@+id/textView21"
-                android:layout_below="@+id/search_category_btn"
+                android:layout_alignTop="@+id/typeSearch"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
 
@@ -68,11 +69,12 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:id="@+id/typeSearch"
-                android:layout_alignBottom="@+id/textView21"
+                android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/textView21"
                 android:layout_toEndOf="@+id/textView21"
-                android:layout_marginLeft="21dp"
-                android:layout_marginStart="21dp" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
@@ -80,20 +82,18 @@
                 android:layout_height="wrap_content"
                 android:text="Select Type"
                 android:id="@+id/search_type_btn"
-                android:layout_below="@+id/search_category_btn"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true"
                 android:layout_alignLeft="@+id/search_category_btn"
-                android:layout_alignStart="@+id/search_category_btn" />
+                android:layout_alignStart="@+id/search_category_btn"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
 
         </RelativeLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.25">
+            android:layout_height="wrap_content">
 
             <Button
                 android:layout_width="wrap_content"
@@ -123,7 +123,7 @@
             android:layout_height="250dp"
             android:gravity="bottom"
             android:weightSum="1"
-            android:layout_weight="0.46"
+            android:layout_weight="0.47"
             android:focusable="true"
             android:visibility="visible">
 
@@ -141,6 +141,18 @@
                 android:layout_weight="0.93"
                 android:focusable="false"
                 android:visibility="visible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Help"
+                android:id="@+id/help_search_btn" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

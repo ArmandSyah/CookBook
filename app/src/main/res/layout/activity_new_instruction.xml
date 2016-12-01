@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.projectsax.cookbook.NewInstruction">
+    tools:context=".activitypackage.NewInstruction">
 
     <LinearLayout
         android:orientation="vertical"
@@ -83,14 +83,14 @@
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="64dp"
             android:weightSum="1">
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add Step"
+                android:text="Add"
                 android:id="@+id/add_instruction_btn" />
 
             <Button
@@ -106,6 +106,12 @@
                 android:text="Finish"
                 android:id="@+id/finish_instruction_btn"
                 android:layout_weight="0.23" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Help"
+                android:id="@+id/help_instruction_btn" />
 
         </LinearLayout>
 

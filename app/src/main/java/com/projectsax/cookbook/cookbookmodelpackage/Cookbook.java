@@ -1,6 +1,5 @@
-package cookbook;
+package com.projectsax.cookbook.cookbookmodelpackage;
 
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.google.gson.Gson;
@@ -9,9 +8,10 @@ import com.google.gson.reflect.TypeToken;
 import org.litepal.LitePal;
 import org.litepal.crud.DataSupport;
 
-import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class Cookbook {
     private Gson gson = new Gson();
@@ -28,18 +28,7 @@ public class Cookbook {
 
     private Cookbook() {
         listOfRecipes = (ArrayList<Recipe>) DataSupport.findAll(Recipe.class);
-
-        for(Recipe r: listOfRecipes){
-            String outputArrayListIngredients = r.getListOfIngredientsInJson();
-            Type typeIngredient = new TypeToken<ArrayList<Ingredient>>() {}.getType();
-            ArrayList<Ingredient> ingredientList = gson.fromJson(outputArrayListIngredients, typeIngredient);
-            r.setListOfIngredients(ingredientList);
-
-            String outputArrayListInstructions = r.getListOfInstructionsInJson();
-            Type typeInstruction = new TypeToken<ArrayList<Instruction>>() {}.getType();
-            ArrayList<Instruction> instructionList = gson.fromJson(outputArrayListInstructions, typeInstruction);
-            r.setListOfInstructions(instructionList);
-        }
+        getIngredientsAndInstructionsFromJSON(listOfRecipes);
     }
 
     public void addRecipe(Recipe newRecipe){
@@ -86,12 +75,14 @@ public class Cookbook {
         ArrayList<Recipe> foundDisjunctiveRecipes = new ArrayList<Recipe>();
         ArrayList<Recipe> foundDiscludedRecipes = new ArrayList<Recipe>();
 
+        ArrayList<Recipe> foundGeneralRecipes = new ArrayList<Recipe>();
+
         if(!allListedIngredients.isEmpty()){
             for(Recipe r: listOfRecipes){
                 ArrayList<Ingredient> ingredients = r.getListOfIngredients();
                 for(Ingredient i: allListedIngredients){
                     if(ingredients.contains(i)){
-                        queriedRecipes.add(r);
+                        foundGeneralRecipes.add(r);
                         break;
                     }
                 }
@@ -102,33 +93,13 @@ public class Cookbook {
            foundRecipesByCategory
                    = (ArrayList<Recipe>) DataSupport.where("category = ?", selectedCategory).find(Recipe.class);
 
-            for(Recipe r: foundRecipesByCategory){
-                String outputArrayListIngredients = r.getListOfIngredientsInJson();
-                Type typeIngredient = new TypeToken<ArrayList<Ingredient>>() {}.getType();
-                ArrayList<Ingredient> ingredientList = gson.fromJson(outputArrayListIngredients, typeIngredient);
-                r.setListOfIngredients(ingredientList);
-
-                String outputArrayListInstructions = r.getListOfInstructionsInJson();
-                Type typeInstruction = new TypeToken<ArrayList<Instruction>>() {}.getType();
-                ArrayList<Instruction> instructionList = gson.fromJson(outputArrayListInstructions, typeInstruction);
-                r.setListOfInstructions(instructionList);
-            }
+            getIngredientsAndInstructionsFromJSON(foundRecipesByCategory);
         }
         if(!selectedType.isEmpty()){
             foundRecipesByType
                     = (ArrayList<Recipe>) DataSupport.where("type = ?", selectedType).find(Recipe.class);
 
-            for(Recipe r: foundRecipesByType){
-                String outputArrayListIngredients = r.getListOfIngredientsInJson();
-                Type typeIngredient = new TypeToken<ArrayList<Ingredient>>() {}.getType();
-                ArrayList<Ingredient> ingredientList = gson.fromJson(outputArrayListIngredients, typeIngredient);
-                r.setListOfIngredients(ingredientList);
-
-                String outputArrayListInstructions = r.getListOfInstructionsInJson();
-                Type typeInstruction = new TypeToken<ArrayList<Instruction>>() {}.getType();
-                ArrayList<Instruction> instructionList = gson.fromJson(outputArrayListInstructions, typeInstruction);
-                r.setListOfInstructions(instructionList);
-            }
+           getIngredientsAndInstructionsFromJSON(foundRecipesByType);
         }
 
         if(!andIngredients.isEmpty()){
@@ -187,20 +158,30 @@ public class Cookbook {
         }
 
         if(!foundDiscludedRecipes.isEmpty()) {
+          System.out.println("Trace Not");
+          System.out.println(!foundDiscludedRecipes.isEmpty());
           if(queriedRecipes.isEmpty()){
-              for(Recipe r: listOfRecipes){
-                  queriedRecipes.add(r);
-              }
+              System.out.println("Trace query empty");
+              queriedRecipes.addAll(listOfRecipes);
               queriedRecipes.removeAll(foundDiscludedRecipes);
           }
           else{
+              System.out.println("Trace query filled sorta");
+              for(Recipe r: queriedRecipes){
+                  System.out.println("Recipe: " + r.getRecipeName());
+              }
               queriedRecipes.removeAll(foundDiscludedRecipes);
           }
         }
 
-        for(Recipe r: listOfRecipes){
-            System.out.println(r.getRecipeName());
+        if(foundConjunctiveRecipes.isEmpty() && foundDisjunctiveRecipes.isEmpty() && foundDiscludedRecipes.isEmpty()){
+            queriedRecipes.addAll(foundGeneralRecipes);
         }
+
+        Set<Recipe> temporaryHolder = new LinkedHashSet<Recipe>();
+        temporaryHolder.addAll(queriedRecipes);
+        queriedRecipes.clear();
+        queriedRecipes.addAll(temporaryHolder);
         return queriedRecipes;
     }
 
@@ -222,5 +203,19 @@ public class Cookbook {
         listOfRecipes.set(index, edittedRecipe);
         Recipe updateRecipe = edittedRecipe;
         updateRecipe.update(edittedRecipe.getId());
+    }
+
+    protected void getIngredientsAndInstructionsFromJSON(ArrayList<Recipe> recipes){
+        for(Recipe r: recipes){
+            String outputArrayListIngredients = r.getListOfIngredientsInJson();
+            Type typeIngredient = new TypeToken<ArrayList<Ingredient>>() {}.getType();
+            ArrayList<Ingredient> ingredientList = gson.fromJson(outputArrayListIngredients, typeIngredient);
+            r.setListOfIngredients(ingredientList);
+
+            String outputArrayListInstructions = r.getListOfInstructionsInJson();
+            Type typeInstruction = new TypeToken<ArrayList<Instruction>>() {}.getType();
+            ArrayList<Instruction> instructionList = gson.fromJson(outputArrayListInstructions, typeInstruction);
+            r.setListOfInstructions(instructionList);
+        }
     }
 }

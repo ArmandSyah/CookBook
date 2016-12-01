@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".RecipeMaker">
+    tools:context=".activitypackage.RecipeMaker">
 
     <LinearLayout
         android:orientation="vertical"
@@ -156,7 +156,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Select Type"
+                android:text="Type"
                 android:id="@+id/textView6" />
 
             <Space
@@ -169,7 +169,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:id="@+id/typeSelected"
-                android:text="none" />
+                android:hint="Type goes here" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -196,7 +196,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Select Category"
+                android:text="Category"
                 android:id="@+id/textView7" />
 
             <Space
@@ -208,13 +208,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="none"
-                android:id="@+id/categorySelected" />
+                android:id="@+id/categorySelected"
+                android:hint="Category here" />
 
             <Space
                 android:layout_width="20px"
                 android:layout_height="match_parent"
-                android:layout_weight="0.45" />
+                android:layout_weight="0.21" />
 
             <Button
                 android:layout_width="77dp"
@@ -224,18 +224,30 @@
                 android:layout_weight="0.02" />
         </LinearLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Finish"
-            android:id="@+id/finish_recipe_btn"
-            android:layout_weight="0.04" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="56dp">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Reset"
-            android:id="@+id/reset_recipe_btn" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Finish"
+                android:id="@+id/finish_recipe_btn"
+                android:layout_weight="0.04" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reset"
+                android:id="@+id/reset_recipe_btn" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Help"
+                android:id="@+id/help_recipe_maker_btn" />
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ViewSelectedRecipe">
+    tools:context=".activitypackage.ViewSelectedRecipe">
 
     <LinearLayout
         android:orientation="vertical"
@@ -211,6 +211,12 @@
                 android:text="Edit"
                 android:id="@+id/edit_recipe_btn"
                 android:layout_weight="0.18" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Help"
+                android:id="@+id/help_selected_recipe_btn" />
 
         </LinearLayout>
 

@@ -8,7 +8,7 @@
         For example:    
         <dbname value="demo" ></dbname>
     -->
-    <dbname value="Cookbook Project" ></dbname>
+    <dbname value="Cookbook Project"></dbname>
 
     <!--
         Define the version of your database. Each time you want 
@@ -32,7 +32,7 @@
         </list>
     -->
     <list>
-        <mapping class="cookbook.Recipe"></mapping>
+        <mapping class="com.projectsax.cookbook.cookbookmodelpackage.Recipe"></mapping>
     </list>
 
     <!--

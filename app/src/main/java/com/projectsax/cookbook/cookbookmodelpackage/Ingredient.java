@@ -1,6 +1,4 @@
-package cookbook;
-
-import android.os.Parcelable;
+package com.projectsax.cookbook.cookbookmodelpackage;
 
 import org.litepal.crud.DataSupport;
 
@@ -44,7 +42,7 @@ public class Ingredient implements Serializable {
 
         Ingredient that = (Ingredient) o;
 
-        return name.equals(that.name);
+        return name.toUpperCase().equals(that.name.toUpperCase());
 
     }
 

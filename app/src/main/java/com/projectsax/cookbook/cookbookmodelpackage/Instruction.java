@@ -1,4 +1,4 @@
-package cookbook;
+package com.projectsax.cookbook.cookbookmodelpackage;
 
 import org.litepal.crud.DataSupport;
 

@@ -1,8 +1,6 @@
 package com.projectsax.cookbook.adapterpackage;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,7 @@ import com.projectsax.cookbook.R;
 
 import java.util.ArrayList;
 
-import cookbook.Instruction;
+import com.projectsax.cookbook.cookbookmodelpackage.Instruction;
 
 public class InstructionArrayListAdapter extends ArrayAdapter<Instruction> {
 

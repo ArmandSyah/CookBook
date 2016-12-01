@@ -1,17 +1,21 @@
-package com.projectsax.cookbook;
+package com.projectsax.cookbook.activitypackage;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.projectsax.cookbook.R;
+
 import java.util.ArrayList;
 
-import cookbook.Cookbook;
-import cookbook.Recipe;
-import cookbook.RecipeWrapper;
+import com.projectsax.cookbook.cookbookmodelpackage.Cookbook;
+import com.projectsax.cookbook.cookbookmodelpackage.Recipe;
+import com.projectsax.cookbook.cookbookmodelpackage.RecipeWrapper;
 
 public class MainMenu extends AppCompatActivity {
 
@@ -24,6 +28,7 @@ public class MainMenu extends AppCompatActivity {
         Button viewBtn = (Button) findViewById(R.id.view_recipe_btn);
         Button searchBtn = (Button) findViewById(R.id.search_recipe_btn);
         Button newBtn = (Button) findViewById(R.id.new_recipe_btn);
+        Button helpBtn = (Button) findViewById(R.id.help_btn);
 
         cookbook = Cookbook.getInstance();
         viewBtn.setOnClickListener(new View.OnClickListener(){
@@ -54,6 +59,13 @@ public class MainMenu extends AppCompatActivity {
                 startActivityForResult(newRecipeIntent,0);
             }
         });
+
+        helpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                helpDialog();
+            }
+        });
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -74,6 +86,20 @@ public class MainMenu extends AppCompatActivity {
                     return;
             }
         }
+    }
 
+    protected void helpDialog(){
+        AlertDialog helpDialog =  new AlertDialog.Builder(MainMenu.this).create();
+        helpDialog.setTitle("How to Use");
+        helpDialog.setMessage("To make a New Recipe, press the New Recipe Button. \n" +
+                              "\nTo search for a Recipe, press the Search Recipe Button. \n" +
+                              "\nTo simply view full list of Recipes, press the View Recipe List Button");
+        helpDialog.setButton(helpDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        helpDialog.show();
     }
 }
