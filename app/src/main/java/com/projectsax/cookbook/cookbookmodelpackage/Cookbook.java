@@ -230,7 +230,6 @@ public class Cookbook {
         }
 
         if(foundConjunctiveRecipes.isEmpty() && foundDisjunctiveRecipes.isEmpty() && foundDiscludedRecipes.isEmpty()){
-            System.out.println("Trace");
             queriedRecipes.addAll(foundGeneralRecipes);
         }
 
@@ -238,10 +237,7 @@ public class Cookbook {
         temporaryHolder.addAll(queriedRecipes);
         queriedRecipes.clear();
         queriedRecipes.addAll(temporaryHolder);
-        System.out.println("trace fill: " + queriedRecipes.isEmpty());
-        for(Recipe r: queriedRecipes){
-            System.out.println(r.getRecipeName());
-        }
+
         return queriedRecipes;
     }
 

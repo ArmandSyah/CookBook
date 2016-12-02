@@ -60,7 +60,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Type:"
                 android:id="@+id/textView21"
-                android:layout_alignTop="@+id/typeSearch"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
 
@@ -69,12 +69,11 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:id="@+id/typeSearch"
+                android:layout_marginLeft="14dp"
+                android:layout_marginStart="14dp"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/textView21"
-                android:layout_toEndOf="@+id/textView21"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp" />
+                android:layout_toEndOf="@+id/textView21" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"

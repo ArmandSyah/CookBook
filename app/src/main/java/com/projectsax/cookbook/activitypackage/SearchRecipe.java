@@ -154,6 +154,13 @@ public class SearchRecipe extends AppCompatActivity {
                 querriedRecipes = cookbook.searchRecipe(searchByCategory, searchByType,
                         andIngredients, orIngredients, notIngredients, allListedIngredients);
                 viewRecipeListAdapter = new ViewRecipeListAdapter(getApplicationContext(), querriedRecipes);
+
+                if(!querriedRecipes.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Search successful!", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Search unsuccessful :(", Toast.LENGTH_SHORT).show();
+                }
                 searchRecipeList.setAdapter(viewRecipeListAdapter);
                 viewRecipeListAdapter.notifyDataSetChanged();
 

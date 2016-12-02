@@ -65,7 +65,7 @@
                 android:inputType="number"
                 android:ems="10"
                 android:id="@+id/cookTime"
-                android:layout_weight="0.57"
+                android:layout_weight="0.97"
                 android:hint="in min" />
 
             <Space

@@ -19,8 +19,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="106dp"
-            android:layout_weight="0.64">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -109,13 +108,6 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
 
-            <Space
-                android:layout_width="20px"
-                android:layout_height="20px"
-                android:layout_alignTop="@+id/cookTime"
-                android:layout_toRightOf="@+id/cookTime"
-                android:layout_alignParentBottom="true" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -136,6 +128,10 @@
                 android:layout_alignParentStart="true" />
 
         </RelativeLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20px" />
 
         <RelativeLayout
             android:layout_width="match_parent"
