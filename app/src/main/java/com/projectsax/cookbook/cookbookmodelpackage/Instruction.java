@@ -3,7 +3,11 @@ package com.projectsax.cookbook.cookbookmodelpackage;
 import org.litepal.crud.DataSupport;
 
 import java.io.Serializable;
-
+/*
+    Class: Instruction
+    An object represenation of a set of instructions in a recipe
+    Implements Serializable interface
+ */
 public class Instruction implements Serializable {
 
     private int stepNum;

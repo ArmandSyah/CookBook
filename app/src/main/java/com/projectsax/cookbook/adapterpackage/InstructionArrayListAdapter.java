@@ -13,6 +13,12 @@ import java.util.ArrayList;
 
 import com.projectsax.cookbook.cookbookmodelpackage.Instruction;
 
+/*
+    Class: InstructionArrayListAdapter
+    Adapter class for ListView of Instruction. Inflates an ArrayList of Instructions onto it's respective Listview
+    in it's activity
+ */
+
 public class InstructionArrayListAdapter extends ArrayAdapter<Instruction> {
 
     private final Context context;
