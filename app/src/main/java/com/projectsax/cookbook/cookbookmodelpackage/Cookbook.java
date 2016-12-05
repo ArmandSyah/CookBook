@@ -32,7 +32,6 @@ public class Cookbook {
     }
 
     public void addRecipe(Recipe newRecipe){
-        System.out.println("Trace Add");
         listOfRecipes.add(newRecipe);
         newRecipe.save();
         System.out.println(listOfRecipes.indexOf(newRecipe));
@@ -48,7 +47,6 @@ public class Cookbook {
 
     public void deleteRecipe(Recipe deleteThisRecipe){
         if(listOfRecipes.contains(deleteThisRecipe)){
-            System.out.println("Trace2");
             long recipeId = deleteThisRecipe.getId();
             DataSupport.delete(Recipe.class, recipeId);
             listOfRecipes.remove(deleteThisRecipe);
@@ -56,8 +54,6 @@ public class Cookbook {
             return;
         }
         else {
-            System.out.println("Trace");
-            System.out.println(listOfRecipes.contains(deleteThisRecipe));
             return;
         }
     }
@@ -78,14 +74,11 @@ public class Cookbook {
         ArrayList<Recipe> foundGeneralRecipes = new ArrayList<Recipe>();
 
         if(!allListedIngredients.isEmpty()){
-            System.out.println("Trace gen");
             for(Recipe r: listOfRecipes){
                 ArrayList<Ingredient> ingredients = r.getListOfIngredients();
                 for(Ingredient i: allListedIngredients){
                     if(ingredients.contains(i)){
-                        System.out.println("Trace I");
                         foundGeneralRecipes.add(r);
-                        System.out.println(r.getRecipeName());
                         break;
                     }
                 }
@@ -109,7 +102,6 @@ public class Cookbook {
             for (Recipe r : listOfRecipes) {
                 ArrayList<Ingredient> ingredientsInCurrentRecipe = r.getListOfIngredients();
                 if (ingredientsInCurrentRecipe.containsAll(andIngredients)) {
-                    System.out.println("Trace true");
                     foundConjunctiveRecipes.add(r);
                 }
             }

@@ -102,7 +102,7 @@ public class NewIngredient extends AppCompatActivity {
         AlertDialog helpDialog =  new AlertDialog.Builder(NewIngredient.this).create();
         helpDialog.setTitle("How to add Ingredients");
         helpDialog.setMessage("Enter the quantity of the ingredient in the field beside Quantity (You can input any prefered measurement" +
-                "here)\n" +
+                " here)\n" +
                 "\nEnter the name of the ingreident in the field beside ingredient name\n" +
                 "\nWhen both fields are full, press the add button, which will display your ingredient on the list\n" +
                 "\nIf you messed up in making your list of ingredients, pressing reset button will clear the list\n" +
