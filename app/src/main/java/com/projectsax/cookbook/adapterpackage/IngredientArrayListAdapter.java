@@ -13,6 +13,11 @@ import java.util.ArrayList;
 
 import com.projectsax.cookbook.cookbookmodelpackage.Ingredient;
 
+/*
+    Class: IngredientArrayListAdapter
+    Adapter class for ListView of Ingredients. Inflates an ArrayList of Ingredients onto it's respective Listview
+    in it's activity
+ */
 public class IngredientArrayListAdapter extends ArrayAdapter<Ingredient> {
 
     private final Context context;

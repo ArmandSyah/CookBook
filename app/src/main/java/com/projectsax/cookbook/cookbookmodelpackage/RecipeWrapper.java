@@ -3,6 +3,11 @@ package com.projectsax.cookbook.cookbookmodelpackage;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/*
+    Class: RecipeWrapper
+    Wrapper class for the Recipe class
+    Used to pass Recipe Object between activities screens
+ */
 public class RecipeWrapper implements Serializable {
     private Recipe recipe;
     private ArrayList<Recipe> recipeList = new ArrayList<Recipe>();

@@ -4,10 +4,15 @@ import org.litepal.crud.DataSupport;
 
 import java.io.Serializable;
 
+/*
+    Class: Ingredient
+    Object representation of an Ingredient of a recipe
+    Implements Serializable to be able to Searilize Ingredient Object
+ */
 public class Ingredient implements Serializable {
 
-    private String amount;
-    private String name;
+    private String amount; //Amount or Quantity of Ingredient
+    private String name; //Name of Ingredient
 
     public Ingredient(String name){
         this.amount = "";
@@ -36,6 +41,10 @@ public class Ingredient implements Serializable {
     }
 
     @Override
+    /*
+        In order for two ingredients to be equal, all you need for that is that the ingredients are
+        spelt the same
+     */
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
