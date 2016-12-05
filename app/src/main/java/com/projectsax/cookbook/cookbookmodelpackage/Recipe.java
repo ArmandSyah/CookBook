@@ -9,23 +9,28 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
+/*
+    Class: Recipe
+    An object representation of a recipe in a cookbook.
+    Inherits the DataSupport class from the LitePal framework to simplify sql operations on recipes
+    Implements Serializable interface
+    GSON Library also used to turn the ArrayLists into it's JSON String representation
+ */
 public class Recipe extends DataSupport implements Serializable {
 
-    private long id;
-    @Column(ignore = true)
-    private final long idRange = 123456789L;
+    private long id; //ID of the recipe, used for SQL db.
 
-    private int cookTime;
-    private int prepTime;
+    private int cookTime;//Time it takes to cook meal
+    private int prepTime;//time it takes to prepare ingredients for cooking
     @Column(unique = true)
-    private String recipeName;
-    private String type;
-    private String category;
-    private ArrayList<Ingredient> listOfIngredients;
-    private ArrayList<Instruction> listOfInstructions;
+    private String recipeName; //Name of the recipe
+    private String type; //Type/Origin of the recipe
+    private String category; //Category of the recipe
+    private ArrayList<Ingredient> listOfIngredients; //Holds an arraylist of ingredients for the recipe
+    private ArrayList<Instruction> listOfInstructions; //Holds an arraylist of instructions for the recipe
 
-    private String listOfIngredientsInJson;
-    private String listOfInstructionsInJson;
+    private String listOfIngredientsInJson; //String representation of the ArrayList of Ingredients
+    private String listOfInstructionsInJson; //String representation of the ArrayList of Instructions
 
     public Recipe() {
     }
@@ -34,7 +39,7 @@ public class Recipe extends DataSupport implements Serializable {
         Gson gson = new Gson();
 
         Random random = new Random();
-        id = (long) (random.nextLong()*idRange);
+        id = (long) (random.nextLong()*123456789L);
 
         this.cookTime = cookTime;
         this.prepTime = prepTime;
@@ -44,6 +49,11 @@ public class Recipe extends DataSupport implements Serializable {
         this.listOfIngredients = listOfIngredients;
         this.listOfInstructions = listOfInstructions;
 
+        //
+        //Because SQL Databases can't take arrayLists as input for it's tables, those arrayLists
+        //are modified into String representations and saved into the database instead. The GSON
+        //library provides a way to turn Java Objects into JSON strings.
+        //
         listOfIngredientsInJson = gson.toJson(listOfIngredients);
         listOfInstructionsInJson = gson.toJson(listOfInstructions);
     }

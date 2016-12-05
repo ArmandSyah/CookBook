@@ -14,6 +14,12 @@ import java.util.ArrayList;
 
 import com.projectsax.cookbook.cookbookmodelpackage.Recipe;
 
+/*
+    Class: ViewRecipeListAdapter
+    Adapter class for ListView of Recipes. Inflates an ArrayList of Recipes onto it's respective Listview
+    in it's activity
+ */
+
 public class ViewRecipeListAdapter extends ArrayAdapter<Recipe> {
     private final Context context;
     private final ArrayList<Recipe> listOfRecipes;
