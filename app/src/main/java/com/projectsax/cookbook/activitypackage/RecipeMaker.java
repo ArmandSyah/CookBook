@@ -22,19 +22,26 @@ import com.projectsax.cookbook.cookbookmodelpackage.InstructionWrapper;
 import com.projectsax.cookbook.cookbookmodelpackage.Recipe;
 import com.projectsax.cookbook.cookbookmodelpackage.RecipeWrapper;
 
+/*
+    Class: RecipeMaker
+    This is the class representation of the RecipeMaker Activity for the cookbook application.
+    This activity is used for making or updating Recipe objects.
+ */
+
 public class RecipeMaker extends AppCompatActivity {
 
-    private ArrayList<Ingredient> listOfIngredients = new ArrayList<Ingredient>();
-    private ArrayList<Instruction> listOfInstructions = new ArrayList<Instruction>();
+    private ArrayList<Ingredient> listOfIngredients = new ArrayList<Ingredient>(); //ArrayList of Ingredients Objects to store the Ingredient made by the user
+    private ArrayList<Instruction> listOfInstructions = new ArrayList<Instruction>(); //ArrayList of Instructions Objects to store the Instruction made by the user
 
+    //Components on the screen for RecipeMaker activity
     private EditText recipeName;
     private EditText cookTime;
     private EditText prepTime;
     private TextView typeSelected;
     private TextView categorySelected;
 
-    private String flagChecker;
-    private Recipe editThisRecipe;
+    private String flag; //Since this activity is used for making a New Recipe and Editing Recipe, we used a passed flag to determine which action the user is performing.
+    private Recipe editThisRecipe; //if user is editting recipe, the recipe to be editted is pulled from the intent and placed here
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +54,7 @@ public class RecipeMaker extends AppCompatActivity {
         typeSelected = (TextView) findViewById(R.id.typeSelected);
         categorySelected = (TextView) findViewById(R.id.categorySelected);
 
+        //Instantialization of Button componenets on screen for RecipeMaker activity
         Button createIngredientBtn = (Button) findViewById(R.id.make_ingredient_btn);
         Button createInstrucitonBtn = (Button) findViewById(R.id.make_instruction_btn);
         Button selectTypeBtn = (Button) findViewById(R.id.select_type);
@@ -55,35 +63,38 @@ public class RecipeMaker extends AppCompatActivity {
         Button finishBtn = (Button) findViewById(R.id.finish_recipe_btn);
         Button helpBtn = (Button) findViewById(R.id.help_recipe_maker_btn);
 
-        flagChecker = getIntent().getStringExtra("flag");
-        checkFlag(flagChecker);
+        flag = getIntent().getStringExtra("flag"); //get's the flag String passed with the intent
+        checkFlag(flag); //runs a flag check function to check content of flag String
 
+        //setting a nested onClickListener for createIngredientBtn Button
         createIngredientBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent createIngredientIntent = new Intent(getApplicationContext(), NewIngredient.class);
-                createIngredientIntent.putExtra("ingredientList", new IngredientWrapper(listOfIngredients));
-                startActivityForResult(createIngredientIntent, 0);
+                Intent createIngredientIntent = new Intent(getApplicationContext(), NewIngredient.class); //set up intent for NewIngredient activity
+                createIngredientIntent.putExtra("ingredientList", new IngredientWrapper(listOfIngredients)); //put list of ingredient arrayList into intent
+                startActivityForResult(createIngredientIntent, 0); //start NewIngredient activity, with request code 0
 
             }
 
         });
 
+        //setting a nested onClickListener for createInstrucitonBtn Button
         createInstrucitonBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent createInstructionIntent = new Intent(getApplicationContext(), NewInstruction.class);
-                createInstructionIntent.putExtra("instructionList", new InstructionWrapper(listOfInstructions));
-                startActivityForResult(createInstructionIntent,1);
+                Intent createInstructionIntent = new Intent(getApplicationContext(), NewInstruction.class); //set up intent for NewInstruction activity
+                createInstructionIntent.putExtra("instructionList", new InstructionWrapper(listOfInstructions)); //put list of instruction arrayList into intent
+                startActivityForResult(createInstructionIntent,1); //start NewInstruction activity, with request code 1
             }
         });
 
+        //setting a nested onClickListener for resetInstructionBtn Button
         resetBtn.setOnClickListener(new View.OnClickListener(){
 
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { //onClick, it resets and clears everything from textFields to the arrayLists
                 recipeName.setText("");
                 cookTime.setText("");
                 prepTime.setText("");
@@ -95,45 +106,49 @@ public class RecipeMaker extends AppCompatActivity {
             }
         });
 
+        //setting a nested onClickListener for selectTypeBtn Button
         selectTypeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                typeSelector();
+                typeSelector();//runs static typeSelector function onClick
             }
         });
 
+        //setting a nested onClickListener for selectCategoryBtn Button
         selectCategoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                categorySelector();
+                categorySelector(); //runs static categorySelector function onClick
             }
         });
 
+        //setting a nested onClickListener for finishBtn Button
         finishBtn.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
+                //Get all the user inputs from textFields and puts them as strings
                 String nameOfRecipe = recipeName.getText().toString();
                 String timeToCook = String.valueOf(cookTime.getText().toString());
                 String timeToPrep = String.valueOf(prepTime.getText().toString());
                 String typeOfRecipe = typeSelected.getText().toString();
                 String categoryOfRecipe = categorySelected.getText().toString();
 
-                if(flagChecker.equals("New")) {
+                if(flag.equals("New")) { //If the flag String is 'New', perform these operations
                     if (nameOfRecipe.equals("") || timeToCook.equals("") || timeToPrep.equals("") || typeOfRecipe.equals("none") || categoryOfRecipe.equals("none")
-                            || listOfIngredients.isEmpty() || listOfInstructions.isEmpty()) {
+                            || listOfIngredients.isEmpty() || listOfInstructions.isEmpty()) { //Check if any of the fields or lists are empty
                         Toast.makeText(getApplicationContext(), "You are missing some fields. Enter all fields first", Toast.LENGTH_SHORT).show();
                         return;
-                    } else {
+                    } else { //else if all fields are filled
                         Recipe newRecipe = new Recipe(Integer.parseInt(timeToCook), Integer.parseInt(timeToPrep),
-                                nameOfRecipe, typeOfRecipe, categoryOfRecipe, listOfIngredients, listOfInstructions);
-                        Intent returnIntent = new Intent();
-                        returnIntent.putExtra("recipe", new RecipeWrapper(newRecipe));
+                                nameOfRecipe, typeOfRecipe, categoryOfRecipe, listOfIngredients, listOfInstructions); //Make a Recipe object with the fields and the lists
+                        Intent returnIntent = new Intent(); //Make a new Intent to pass back
+                        returnIntent.putExtra("recipe", new RecipeWrapper(newRecipe)); //Put recipe object in wrapper and put it into Intent
                         setResult(RESULT_OK, returnIntent);
-                        finish();
+                        finish(); //finish activity and go back
                     }
                 }
-                else if(flagChecker.equals("Edit")){
+                else if(flag.equals("Edit")){ //If the flag String is 'Edit', perform these operations
                     if (nameOfRecipe.equals("") || timeToCook.equals("") || timeToPrep.equals("") || typeOfRecipe.equals("none") || categoryOfRecipe.equals("none")
                             || listOfIngredients.isEmpty() || listOfInstructions.isEmpty()) {
                         Toast.makeText(getApplicationContext(), "You are missing some fields. Enter all fields first", Toast.LENGTH_SHORT).show();
@@ -161,21 +176,23 @@ public class RecipeMaker extends AppCompatActivity {
             }
         });
     }
+
+    //Function that runs after coming back from an activity
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_CANCELED) {
+        if(resultCode == RESULT_CANCELED) { //if user clicks cancel, simply returns from the function
             return;
         }
         else {
-            switch (requestCode) {
+            switch (requestCode) { //else it checks the request code and runs code based off that
                 case 0:
-                    IngredientWrapper ingredientWrapper = (IngredientWrapper) data.getSerializableExtra("ingredientList");
-                    listOfIngredients = ingredientWrapper.getIngredients();
+                    IngredientWrapper ingredientWrapper = (IngredientWrapper) data.getSerializableExtra("ingredientList"); //gets IngredientWrapper passed in intent
+                    listOfIngredients = ingredientWrapper.getIngredients(); //takes listOfIngredients arrayList from wrapper and sets it equal to instance of ingredient list in this activity
                     Toast.makeText(getApplicationContext(), "Finished Adding List of Ingredients to our Recipe", Toast.LENGTH_SHORT).show();
                     return;
                 case 1:
-                    InstructionWrapper instructionWrapper = (InstructionWrapper) data.getSerializableExtra("instructionList");
-                    listOfInstructions = instructionWrapper.getInstructions();
+                    InstructionWrapper instructionWrapper = (InstructionWrapper) data.getSerializableExtra("instructionList"); //gets InstructionWrapper passed in intent
+                    listOfInstructions = instructionWrapper.getInstructions(); //takes listOfInstructions arrayList from wrapper and sets it equal to instance of instruction list in this activity
                     Toast.makeText(getApplicationContext(), "Finish Adding List of Instructions to our Recipe", Toast.LENGTH_SHORT).show();
                     return;
             }
@@ -183,6 +200,7 @@ public class RecipeMaker extends AppCompatActivity {
 
     }
 
+    //Dialog to choose recipe type
     protected void typeSelector(){
         final CharSequence[] listOfTypes = {"Canadian", "American", "Mexican", "British", "Chinese", "Japanese", "Columbian",
                 "Brazillian", "Korean", "Other"};
@@ -199,6 +217,7 @@ public class RecipeMaker extends AppCompatActivity {
         typeBuilder.show();
     }
 
+    //Dialog to choose recipe category
     protected void categorySelector(){
         final CharSequence[] listOfCategories = {"Breakfast", "Lunch", "Dinner", "Snack", "Desert", "Other"};
         AlertDialog.Builder categoryBuilder = new AlertDialog.Builder(this);
@@ -214,12 +233,13 @@ public class RecipeMaker extends AppCompatActivity {
         categoryBuilder.show();
     }
 
+    //Function to check the flag passed
     protected void checkFlag(String flag){
-        if(flag.equals("New")){
+        if(flag.equals("New")){ //If flag is 'New', that means a new recipe is gonna be made, and nothing happens
             Toast.makeText(getApplicationContext(), "Ready to make a New Recipe", Toast.LENGTH_SHORT).show();
             return;
         }
-        else if(flag.equals("Edit")){
+        else if(flag.equals("Edit")){ //If flag is 'Edit', that means a recipe is passed here to be editted. All fields will be filled with info of recipe to be editted, to be changed at user discretion
             RecipeWrapper editRecipeWrapper = (RecipeWrapper) getIntent().getSerializableExtra("editableRecipe");
             editThisRecipe = editRecipeWrapper.getRecipe();
 
@@ -237,6 +257,7 @@ public class RecipeMaker extends AppCompatActivity {
         }
     }
 
+    //function for help Dialog
     protected void helpDialog(){
         AlertDialog helpDialog =  new AlertDialog.Builder(RecipeMaker.this).create();
         helpDialog.setTitle("How to Create new/Edit Recipe");
