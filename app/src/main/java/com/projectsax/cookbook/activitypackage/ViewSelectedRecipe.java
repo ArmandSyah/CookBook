@@ -18,23 +18,32 @@ import com.projectsax.cookbook.adapterpackage.InstructionArrayListAdapter;
 import com.projectsax.cookbook.cookbookmodelpackage.Cookbook;
 import com.projectsax.cookbook.cookbookmodelpackage.Recipe;
 import com.projectsax.cookbook.cookbookmodelpackage.RecipeWrapper;
-
+/*
+    Class: ViewRecipeList
+    This is the class representation of the ViewSelectedRecipe Activity for the cookbook application.
+    This activity is used for viewing the full information of the recipe you selected from SearchRecipe,
+    you selected from ViewRecipeList, or the info of a Recipe after you made a new one
+ */
 public class ViewSelectedRecipe extends AppCompatActivity {
 
-    private Cookbook cookbook = Cookbook.getInstance();
+    private Cookbook cookbook = Cookbook.getInstance(); //Singleton instance of Cookbook
 
-    private RecipeWrapper recipeWrapper;
-    private Recipe viewRecipe;
+    //get the RecipeWrapper attached to the intent and then the recipe attached to that RecipeWrapper
+    private RecipeWrapper recipeWrapper = (RecipeWrapper) getIntent().getSerializableExtra("recipe");;
+    private Recipe viewRecipe = recipeWrapper.getRecipe();;
 
+    //Text Components of the screen
     private TextView recipeName;
     private TextView type;
     private TextView category;
     private TextView prepTime;
     private TextView cookTime;
 
+    //ListView Components of the screen
     private ListView listOfIngredients;
     private ListView listOfInstructions;
 
+    //Adapter class instance variables
     private IngredientArrayListAdapter ingredientArrayListAdapter;
     private InstructionArrayListAdapter instructionArrayListAdapter;
     @Override
@@ -42,12 +51,10 @@ public class ViewSelectedRecipe extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_selected_recipe);
 
+        //Instantializing all of the components
         Button deleteRecipeBtn = (Button) findViewById(R.id.delete_recipe_btn);
         Button editRecipeBtn = (Button) findViewById(R.id.edit_recipe_btn);
         Button helpBtn = (Button) findViewById(R.id.help_selected_recipe_btn);
-
-        recipeWrapper = (RecipeWrapper) getIntent().getSerializableExtra("recipe");
-        viewRecipe = recipeWrapper.getRecipe();
 
         recipeName = (TextView) findViewById(R.id.recipeName);
         type = (TextView) findViewById(R.id.type);
@@ -58,29 +65,31 @@ public class ViewSelectedRecipe extends AppCompatActivity {
         listOfIngredients = (ListView) findViewById(R.id.listOfIngredients);
         listOfInstructions = (ListView) findViewById(R.id.listOfInstructions);
 
-        setUp();
+        setUp(); //run this setup function
 
+        //setting a nested onClickListener for deleteRecipeBtn Button
         deleteRecipeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 cookbook.deleteRecipe(viewRecipe);
                 Toast.makeText(getApplicationContext(), "Recipe Deleted", Toast.LENGTH_SHORT).show();
-                System.out.println("Size: " + cookbook.size());
                 finish();
             }
         });
 
+        //setting a nested onClickListener for editRecipeBtn Button
         editRecipeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent editRecipeIntent = new Intent(ViewSelectedRecipe.this, RecipeMaker.class);
-                editRecipeIntent.putExtra("flag", "Edit");
-                editRecipeIntent.putExtra("editableRecipe", new RecipeWrapper(viewRecipe));
-                startActivityForResult(editRecipeIntent, 0);
+                Intent editRecipeIntent = new Intent(ViewSelectedRecipe.this, RecipeMaker.class); //Make a new intent for RecipeMaker activity
+                editRecipeIntent.putExtra("flag", "Edit"); //Put a string labeled flag into intent
+                editRecipeIntent.putExtra("editableRecipe", new RecipeWrapper(viewRecipe)); //put the recipe being diplayed into a wrapper and then into the intent
+                startActivityForResult(editRecipeIntent, 0); //start RecipeMaker Activity
             }
         });
 
+        //setting a nested onClickListener for helpBtn Button
         helpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +115,8 @@ public class ViewSelectedRecipe extends AppCompatActivity {
         }
     }
 
+    //Function used to set up the recipe page for viewing using all the info from the recipe
+    //All the text components take the attributes of the recipe and displays them
     protected void setUp(){
         recipeName.setText(viewRecipe.getRecipeName());
         type.setText(viewRecipe.getType());

@@ -18,7 +18,11 @@ import java.util.ArrayList;
 import com.projectsax.cookbook.cookbookmodelpackage.Cookbook;
 import com.projectsax.cookbook.cookbookmodelpackage.Recipe;
 import com.projectsax.cookbook.cookbookmodelpackage.RecipeWrapper;
-
+/*
+    Class: ViewRecipeList
+    This is the class representation of the ViewRecipeList Activity for the cookbook application.
+    This activity is used for viewing the full list of recipes in the Cookbook.
+ */
 public class ViewRecipeList extends AppCompatActivity {
 
     private ArrayList<Recipe> currentListOfRecipes;
