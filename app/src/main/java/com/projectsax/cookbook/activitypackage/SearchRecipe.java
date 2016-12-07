@@ -115,12 +115,12 @@ public class SearchRecipe extends AppCompatActivity {
                 String searchByCategory = searchCategory.getText().toString();
                 String searchByType = searchType.getText().toString();
                 String searchBar = searchField.getText().toString();
-                String[] ingredientSearchQuery = searchBar.split(" ");
+                String[] ingredientSearchQuery = searchBar.split(" "); //Spliting search query by spaces
 
-                ArrayList<Ingredient> allListedIngredients = new ArrayList<Ingredient>();
-                ArrayList<Ingredient> andIngredients = new ArrayList<Ingredient>();
-                ArrayList<Ingredient> orIngredients = new ArrayList<Ingredient>();
-                ArrayList<Ingredient> notIngredients = new ArrayList<Ingredient>();
+                ArrayList<Ingredient> allListedIngredients = new ArrayList<Ingredient>(); //list of any ingredients listed by the user
+                ArrayList<Ingredient> andIngredients = new ArrayList<Ingredient>(); //list of ingredients between AND boolean word
+                ArrayList<Ingredient> orIngredients = new ArrayList<Ingredient>(); //list of ingredients between OR boolean word
+                ArrayList<Ingredient> notIngredients = new ArrayList<Ingredient>(); //list of ingredients after NOT boolean word
 
                 for (int i = 0; i < ingredientSearchQuery.length; i++) {
                     if (ingredientSearchQuery[i].toUpperCase().equals("AND")) {
